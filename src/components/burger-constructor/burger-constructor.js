@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import styles from "../burger_constructor/burger_constructor.module.css";
+import styles from ".//burger_constructor.module.css";
 import {ConstructorElement} from "@ya.praktikum/react-developer-burger-ui-components";
 import {DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import {Button} from '@ya.praktikum/react-developer-burger-ui-components';

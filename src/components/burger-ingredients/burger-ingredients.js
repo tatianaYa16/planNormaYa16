@@ -1,8 +1,8 @@
 import React from 'react';
 import {ConstructorElement, DragIcon, Tab} from "@ya.praktikum/react-developer-burger-ui-components";
-import styles from './burger_ingredients.module.css';
+import styles from './burger-ingredients.module.css';
 import PropTypes from "prop-types";
-import BurgerConstructor from "../burger_constructor/burger_constructor";
+import BurgerConstructor from "../burger-constructor/burger-constructor";
 import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 
 BurgerConstructor.propTypes = {
