@@ -4,7 +4,6 @@ import styles from './app.module.css';
 import AppHeader from "../app_header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
-import Modal from "../modal/modal";
 
 
 export default function App() {
@@ -13,14 +12,9 @@ export default function App() {
     useEffect(() => {
         const getIngredients = async () => {
             await fetch(url)
-                //.then(res => res.json())
-                .then(res => {
-                    if (res.ok) {
-                        return res.json();
-                    }
-                    return Promise.reject(`Ошибка ${res.status}`);
-                })
+                .then(res => res.json())
                 .then(data => {
+                    console.log("length " + data.data.length);
                     setState({...state, data: data.data, isLoading: false})
                 })
                 .catch(e => {
@@ -33,28 +27,25 @@ export default function App() {
     const [state, setState] = React.useState({
         isLoading: true, hasError: false,
         data: []
-    });
-
+    })
     const {data, isLoading, hasError} = state;
     return (
-        <section>
-            <div className={styles.App}>
-                <AppHeader/>
-                <main>
-                    <div className={styles.mainBurger}>
-                        <BurgerIngredients items={data}/>
-                        <div>
-                            {isLoading && 'Загрузка...'}
-                            {hasError && 'Произошла ошибка'}
-                            {!isLoading &&
-                                !hasError &&
-                                data.length &&
-                                <BurgerConstructor items={data}/>}
-                        </div>
-                    </div>
-                </main>
+        <div className={styles.App}>
+            <AppHeader/>
+            <main>
+            <div className={styles.mainBurger}>
+                <BurgerIngredients items={data}/>
+                <div>
+                    {isLoading && 'Загрузка...'}
+                    {hasError && 'Произошла ошибка'}
+                    {!isLoading &&
+                        !hasError &&
+                        data.length &&
+                        <BurgerConstructor items={data}/>}
+                </div>
             </div>
-        </section>
+            </main>
+        </div>
     );
 
 }

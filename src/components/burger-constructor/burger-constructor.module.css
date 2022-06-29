@@ -6,26 +6,11 @@
 
 
     width: 600px;
-    height: 400px;
+    height: 500px;
     left: 16px;
     top: 100px;
     padding: 20px;
-    margin-left: 20px;
     overflow: auto;
-}
-
-.buns {
-    width: 530px;
-}
-
-.constructorMain{
-    width: 600px;
-    max-height: 800px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 100px;
-    padding-bottom: 40px;
 }
 
 .order{

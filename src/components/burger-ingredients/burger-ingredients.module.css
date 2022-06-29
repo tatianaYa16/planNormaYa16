@@ -1,45 +1,37 @@
 .img {
-    width: 240px;
-    height: 120px;
+ width: 240px;
+ height: 120px;
 }
 
-.ingredientItem {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0px;
-    margin: 0;
+.ingredientItem{
+ display: flex;
+ flex-wrap: wrap;
+ width: 600px;
+ flex-direction: row;
+ align-items: center;
+ padding: 0px;
+ gap: 8px;
 }
 
-.price {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding-right: 20px;
-    margin: auto;
+.price{
+ display: flex;
+ flex-direction: row;
+ justify-content: center;
+ align-items: center;
+ padding: 0px;
+ gap: 8px;
 }
 
-.ingredients {
-    display: flex;
-    flex-direction: column;
-    width: 600px;
-    overflow: auto;
-    height: 700px;
-    display: block;
-}
-
-.menu {
-    display: flex;
-}
-
-.name {
-    text-align: center;
-    overflow-wrap: break-word;
-}
-
-.ingredientCard {
-    max-width: 270px;
+.ingredients{
+ display: flex;
+ flex-direction: column;
+ align-items: flex-start;
+ gap: 10px;
+ width: 650px;
+ height: 650px;
+ left: 16px;
+ top: 100px;
+ padding: 20px;
+ overflow: auto;
 }
 

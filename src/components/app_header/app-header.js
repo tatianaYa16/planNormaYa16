@@ -9,20 +9,23 @@ export default function AppHeader() {
 
     return (
         <header className={styles.header}>
-            {/*<nav className={'${styles.headerIte} mp-4'}>*/}
-
             <div className={styles.headerItem}>
                 <BurgerIcon type="primary"/>
-                <p className="text text_type_main-default ml-2">Конструктор</p>
-                <ListIcon type="secondary"/>
-                <p className="text text_type_main-default ml-2">Лента заказов</p>
+                <p className="text text_type_main-default">
+                    Конструктор
+                </p>
+                <ListIcon type="primary"/>
+                <p className="text text_type_main-default">
+                    Лента заказов
+                </p>
             </div>
             <Logo/>
             <div className={styles.headerItem}>
                 <ProfileIcon type="primary"/>
-                <p className="text text_type_main-default ml-2">Личный кабинет</p>
+                <p className="text text_type_main-default">
+                    Личный кабинет
+                </p>
             </div>
-            {/*</nav>*/}
 
         </header>
     )
