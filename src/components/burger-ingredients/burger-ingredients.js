@@ -53,12 +53,9 @@ export default function BurgerIngredients(props) {
 
     const handleOpenModal = (e) => {
         const target = e.currentTarget;
-        console.log(target);
         const id = target.getAttribute('id');
-        console.log("id : " + id);
         setSelectedIngredient(props.items.find((item) => item._id === id));
         setVisibleModal(true);
-        console.log(selectedIngredient.name);
     }
 
     const handleCloseModal = () => {
