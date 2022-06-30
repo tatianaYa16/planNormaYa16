@@ -28,7 +28,12 @@ const MenuTab = () => {
     )
 }
 
-const Ingridient = (props) => {
+
+Ingridient.propTypes = {
+    item: PropTypes.object.isRequired,
+    onClick: PropTypes.func.isRequired
+};
+function Ingridient(props){
     return (
         <div onClick={props.onClick} id={props.item._id} className={styles.ingredientCard}>
             <img src={props.item.image_large} className={styles.img}/>

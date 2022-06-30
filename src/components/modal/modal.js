@@ -16,7 +16,7 @@ const modalRoot = document.getElementById("react-modals");
 export default function Modal(props) {
     const {children, headerText, onClose} = props;
     const handleEscKey = (e) => {
-        if (e.keyCode === 27) {
+        if (e.key === 'Escape') {
             onClose(e);
         }
     }
@@ -25,7 +25,7 @@ export default function Modal(props) {
         return () => {
             document.removeEventListener('keyup', handleEscKey);
         }
-    })
+    },[])
 
 
     return ReactDOM.createPortal(

@@ -21,18 +21,20 @@ export default function BurgerConstructor(props) {
         setModal(!modal);
     }
 
+    const ingredients = props.items.filter(item => item.type != "bun");
+
     return (
         <section className={styles.constructorMain}>
             <div className={styles.buns +'pl-10'}>
                 <ConstructorElement
-                    type={props.items[0].type}
+                    type='top'
                     isLocked={true}
-                    text={props.items[0].name + ' верх'}
+                    text={props.items[0].name + ' (верх)'}
                     price={props.items[0].price}
                     thumbnail={props.items[0].image}
                 />
                 <div className={styles.ingredients}>
-                    {props.items.map((ingredient) => (
+                    {ingredients.map((ingredient) => (
                         <div key={ingredient._id}>
                             <DragIcon type="primary"/>
                             <ConstructorElement
@@ -46,9 +48,9 @@ export default function BurgerConstructor(props) {
                     ))}
                 </div>
                 <ConstructorElement
-                    type={props.items[0].type}
+                    type='bottom'
                     isLocked={true}
-                    text={props.items[0].name + ' низ'}
+                    text={props.items[0].name + ' (низ)'}
                     price={props.items[0].price}
                     thumbnail={props.items[0].image}
                 />
