@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {ConstructorElement, DragIcon, Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './burger-ingredients.module.css';
 import PropTypes from "prop-types";
@@ -6,6 +6,9 @@ import BurgerConstructor from "../burger-constructor/burger-constructor";
 import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientDetails from "../ingredient-details/ingredient-details"
 import Modal from "../modal/modal";
+
+import {useDispatch, useSelector} from "react-redux";
+import {getIngredientsFromServer} from "../../services/actions/burger-ingredients";
 
 BurgerConstructor.propTypes = {
     items: PropTypes.array.isRequired
@@ -33,7 +36,8 @@ Ingridient.propTypes = {
     item: PropTypes.object.isRequired,
     onClick: PropTypes.func.isRequired
 };
-function Ingridient(props){
+
+function Ingridient(props) {
     return (
         <div onClick={props.onClick} id={props.item._id} className={styles.ingredientCard}>
             <img src={props.item.image_large} className={styles.img}/>
@@ -49,9 +53,16 @@ function Ingridient(props){
 }
 
 export default function BurgerIngredients(props) {
-    const buns = props.items.filter(item => item.type === "bun");
-    const mains = props.items.filter(item => item.type === "main");
-    const sauces = props.items.filter(item => item.type === "sauce");
+    const {ingredients, ingredientsRequest} = useSelector(state => state.burgerIngredients)
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getIngredientsFromServer());
+    }, [dispatch]);
+
+    const buns = ingredients.filter(item => item.type === "bun");
+    const mains = ingredients.filter(item => item.type === "main");
+    const sauces = ingredients.filter(item => item.type === "sauce");
 
     const [visibleModal, setVisibleModal] = React.useState(false);
     const [selectedIngredient, setSelectedIngredient] = React.useState({});
@@ -107,11 +118,11 @@ export default function BurgerIngredients(props) {
                     </div>
                 </div>
             </div>
-                {visibleModal && selectedIngredient &&
-                    <Modal onClose={handleCloseModal} headerText="Детали ингредиента">
-                        <IngredientDetails item={selectedIngredient}/>
-                    </Modal>
-                }
+            {visibleModal && selectedIngredient &&
+                <Modal onClose={handleCloseModal} headerText="Детали ингредиента">
+                    <IngredientDetails item={selectedIngredient}/>
+                </Modal>
+            }
         </section>
     )
 };
