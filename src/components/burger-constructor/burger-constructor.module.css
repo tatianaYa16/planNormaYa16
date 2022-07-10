@@ -18,6 +18,14 @@
     width: 530px;
 }
 
+.bun_empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 568px;
+    padding: 16px 24px;
+}
+
 .constructorMain{
     width: 600px;
     max-height: 800px;

@@ -9,6 +9,7 @@ import Modal from "../modal/modal";
 
 import {useDispatch, useSelector} from "react-redux";
 import {getIngredientsFromServer} from "../../services/actions/burger-ingredients";
+import Ingredient from "./ingredient";
 
 BurgerConstructor.propTypes = {
     items: PropTypes.array.isRequired
@@ -27,27 +28,6 @@ const MenuTab = () => {
             <Tab value="three" active={current === 'three'} onClick={setCurrent}>
                 Начинки
             </Tab>
-        </div>
-    )
-}
-
-
-Ingridient.propTypes = {
-    item: PropTypes.object.isRequired,
-    onClick: PropTypes.func.isRequired
-};
-
-function Ingridient(props) {
-    return (
-        <div onClick={props.onClick} id={props.item._id} className={styles.ingredientCard}>
-            <img src={props.item.image_large} className={styles.img}/>
-            <div className={styles.price}>
-                <p className="text text_type_digits-default">{props.item.price}</p>
-                <CurrencyIcon type="primary"/>
-            </div>
-            <p className={styles.name + ' text text_type_main-small '}>
-                {props.item.name}
-            </p>
         </div>
     )
 }
@@ -92,7 +72,7 @@ export default function BurgerIngredients(props) {
                         </p>
                         <div className={styles.ingredientItem}>
                             {buns.map((bun) => (
-                                <Ingridient key={bun._id} item={bun} onClick={handleOpenModal}/>
+                                <Ingredient key={bun._id} item={bun} onClick={handleOpenModal}/>
                             ))}
                         </div>
                     </div>
@@ -102,7 +82,7 @@ export default function BurgerIngredients(props) {
                         </p>
                         <div className={styles.ingredientItem}>
                             {sauces.map((sauce) => (
-                                <Ingridient key={sauce._id} item={sauce} onClick={handleOpenModal}/>
+                                <Ingredient key={sauce._id} item={sauce} onClick={handleOpenModal}/>
                             ))}
                         </div>
                     </div>
@@ -112,7 +92,7 @@ export default function BurgerIngredients(props) {
                         </p>
                         <div className={styles.ingredientItem}>
                             {mains.map((main) => (
-                                <Ingridient key={main._id} item={main} onClick={handleOpenModal}/>
+                                <Ingredient key={main._id} item={main} onClick={handleOpenModal}/>
                             ))}
                         </div>
                     </div>

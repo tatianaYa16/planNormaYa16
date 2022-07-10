@@ -1,19 +1,58 @@
 import React, {useEffect, useState} from 'react';
 import styles from "./burger-constructor.module.css";
 import {ConstructorElement} from "@ya.praktikum/react-developer-burger-ui-components";
-import {DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import {Button} from '@ya.praktikum/react-developer-burger-ui-components';
 import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
+import {v4 as uuidv4} from 'uuid';
 
 import PropTypes from 'prop-types';
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
+
+import {useDispatch, useSelector} from "react-redux";
+import {useDrop} from "react-dnd";
+import {CONSTRUCTOR_ADD_INGREDIENT, CONSTRUCTOR_ADD_BUN} from '../../services/actions/burger-constructor'
+import IngredientItem from "./ingredient-item/ingredient-item";
 
 BurgerConstructor.propTypes = {
     items: PropTypes.array
 };
 
 export default function BurgerConstructor(props) {
+    const {ingredients, bun} = useSelector(state => ({
+        ingredients: state.burgerConstructor.ingredients,
+        bun: state.burgerConstructor.bun,
+        order: state.burgerConstructor.order
+    }));
+
+    const dispatch = useDispatch();
+
+    const [{isHover}, dropIngredients] = useDrop({
+        accept: 'ingredients',
+        collect: monitor => ({
+            isHover: monitor.isOver()
+        }),
+        drop(item) {
+            dispatch({
+                type: CONSTRUCTOR_ADD_INGREDIENT,
+                item: {...item, uuid: uuidv4()}
+            })
+        }
+    });
+
+    const [{isHoverBun}, dropBun] = useDrop({
+        accept: 'buns',
+        collect: monitor => ({
+            isHoverBun: monitor.isOver()
+        }),
+        drop(item) {
+            dispatch({
+                type: CONSTRUCTOR_ADD_BUN,
+                bun: item
+            })
+        }
+    });
+
     const [orderCost, setOrderCost] = useState(0);
     const [modal, setModal] = useState(false);
 
@@ -21,39 +60,32 @@ export default function BurgerConstructor(props) {
         setModal(!modal);
     }
 
-    const ingredients = props.items.filter(item => item.type != "bun");
-
     return (
         <section className={styles.constructorMain}>
-            <div className={styles.buns +'pl-10'}>
-                <ConstructorElement
-                    type='top'
-                    isLocked={true}
-                    text={props.items[0].name + ' (верх)'}
-                    price={props.items[0].price}
-                    thumbnail={props.items[0].image}
-                />
-                <div className={styles.ingredients}>
-                    {ingredients.map((ingredient) => (
-                        <div key={ingredient._id}>
-                            <DragIcon type="primary"/>
-                            <ConstructorElement
-                                type={ingredient.type}
-                                isLocked={false}
-                                text={ingredient.name}
-                                price={ingredient.price}
-                                thumbnail={ingredient.image}
-                            />
-                        </div>
+            <div className={`${styles.buns} pl-10`} ref={dropBun}>
+                {bun ? (
+                        <ConstructorElement
+                            type='top'
+                            isLocked={true}
+                            text={bun.name + ' (верх)'}
+                            price={bun.price}
+                            thumbnail={bun.image}
+                        />)
+                    : ""}
+                <div ref={dropIngredients}
+                     className={`${styles.ingredients}`}
+                >
+                    {ingredients.map((ingredient,index) => (
+                        <IngredientItem key={ingredient.uuid} index={index} data={ingredient}/>
                     ))}
                 </div>
-                <ConstructorElement
+                {bun ? (<ConstructorElement
                     type='bottom'
                     isLocked={true}
-                    text={props.items[0].name + ' (низ)'}
-                    price={props.items[0].price}
-                    thumbnail={props.items[0].image}
-                />
+                    text={bun.name + ' (низ)'}
+                    price={bun.price}
+                    thumbnail={bun.image}
+                />) : (<div/>)}
 
 
             </div>
@@ -69,7 +101,7 @@ export default function BurgerConstructor(props) {
 
             {modal &&
                 <Modal onClose={handleOpenModal}>
-                    <OrderDetails />
+                    <OrderDetails/>
                 </Modal>
             }
         </section>
