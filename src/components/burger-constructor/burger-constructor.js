@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import styles from "./burger-constructor.module.css";
 import {ConstructorElement} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Button} from '@ya.praktikum/react-developer-burger-ui-components';
@@ -11,7 +11,12 @@ import OrderDetails from "../order-details/order-details";
 
 import {useDispatch, useSelector} from "react-redux";
 import {useDrop} from "react-dnd";
-import {CONSTRUCTOR_ADD_INGREDIENT, CONSTRUCTOR_ADD_BUN} from '../../services/actions/burger-constructor'
+import {
+    CONSTRUCTOR_ADD_INGREDIENT,
+    CONSTRUCTOR_ADD_BUN,
+    MODAL_CLOSE,
+    postOrderToServer
+} from '../../services/actions/burger-constructor'
 import IngredientItem from "./ingredient-item/ingredient-item";
 
 BurgerConstructor.propTypes = {
@@ -19,10 +24,11 @@ BurgerConstructor.propTypes = {
 };
 
 export default function BurgerConstructor(props) {
-    const {ingredients, bun} = useSelector(state => ({
+    const {ingredients, bun, modal, orderNumber} = useSelector(state => ({
         ingredients: state.burgerConstructor.ingredients,
         bun: state.burgerConstructor.bun,
-        order: state.burgerConstructor.order
+        orderNumber: state.burgerConstructor.orderNumber,
+        modal: state.burgerConstructor.modal
     }));
 
     const dispatch = useDispatch();
@@ -53,11 +59,22 @@ export default function BurgerConstructor(props) {
         }
     });
 
-    const [orderCost, setOrderCost] = useState(0);
-    const [modal, setModal] = useState(false);
+    const totalPrice = useMemo(() => {
+        let price = ingredients.reduce((sum, item) => {
+            return item.price + sum;
+        }, 0);
+        price += bun && bun.price * 2;
+        return price;
+    }, [ingredients, bun])
+
+    const handleCloseModal = () => {
+        dispatch({type: MODAL_CLOSE})
+    }
 
     const handleOpenModal = () => {
-        setModal(!modal);
+        if (!bun) return alert('Добавте сначала булочку.');
+        const ids = [...ingredients.map(item => item._id), bun._id, bun._id];
+        dispatch(postOrderToServer(ids));
     }
 
     return (
@@ -75,7 +92,7 @@ export default function BurgerConstructor(props) {
                 <div ref={dropIngredients}
                      className={`${styles.ingredients}`}
                 >
-                    {ingredients.map((ingredient,index) => (
+                    {ingredients.map((ingredient, index) => (
                         <IngredientItem key={ingredient.uuid} index={index} data={ingredient}/>
                     ))}
                 </div>
@@ -91,7 +108,7 @@ export default function BurgerConstructor(props) {
             </div>
             <div className={styles.order}>
                 <p className={styles.orderCost}>
-                    {orderCost}
+                    {totalPrice}
                 </p>
                 <CurrencyIcon type="primary"/>
                 <Button type="primary" size="large" onClick={handleOpenModal}>
@@ -100,8 +117,8 @@ export default function BurgerConstructor(props) {
             </div>
 
             {modal &&
-                <Modal onClose={handleOpenModal}>
-                    <OrderDetails/>
+                <Modal onClose={handleCloseModal} >
+                    <OrderDetails orderNumber={orderNumber}/>
                 </Modal>
             }
         </section>

@@ -1,13 +1,18 @@
 import {
     INGREDIENTS_FAILED,
     INGREDIENTS_REQUEST,
-    INGREDIENTS_SUCCESS
+    INGREDIENTS_SUCCESS,
+    INGREDIENT_MODAL_CLOSE,
+    INGREDIENT_MODAL_OPEN
 } from "../actions/burger-ingredients";
+
 
 const initialState = {
     ingredients: [],
     ingredientsRequest: false,
-    ingredientsFailed: false
+    ingredientsFailed: false,
+    modal: false,
+    ingredient:null
 };
 
 export const burgerIngredientsReducer = (state = initialState, action) => {
@@ -31,6 +36,19 @@ export const burgerIngredientsReducer = (state = initialState, action) => {
                 ingredientsRequest: false,
                 ingredientsFailed: false,
                 ingredients: action.ingredients
+            }
+        }case INGREDIENT_MODAL_CLOSE: {
+            return {
+                ...state,
+                ingredient: null,
+                modal: false
+            }
+        }
+        case INGREDIENT_MODAL_OPEN: {
+            return {
+                ...state,
+                modal: true,
+                ingredient: action.ingredient
             }
         }
         default:

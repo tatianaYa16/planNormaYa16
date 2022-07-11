@@ -1,6 +1,11 @@
+import {BASE_URL} from '../../utils/configs';
+import {checkResponse} from  '../../utils/response-utils';
+
 export const INGREDIENTS_REQUEST = 'INGREDIENTS_REQUEST';
 export const INGREDIENTS_SUCCESS = 'INGREDIENTS_SUCCESS';
 export const INGREDIENTS_FAILED = 'INGREDIENTS_FAILED';
+export const INGREDIENT_MODAL_CLOSE = 'INGREDIENT_MODAL_CLOSE';
+export const INGREDIENT_MODAL_OPEN = 'INGREDIENT_MODAL_OPEN';
 
 const url = 'https://norma.nomoreparties.space/api/ingredients';
 
@@ -10,13 +15,8 @@ export const getIngredientsFromServer = () => {
             type: INGREDIENTS_REQUEST
         })
         const getIngredients = async () => {
-            await fetch(url)
-                .then(res => {
-                    if (res.ok) {
-                        return res.json();
-                    }
-                    throw new Error(`Error occurred: ${res.status}`);
-                })
+            await fetch(BASE_URL+'ingredients')
+                .then(checkResponse)
                 .then(data => {
                     if (data && data.success) {
                         dispatch({

@@ -8,7 +8,7 @@ import IngredientDetails from "../ingredient-details/ingredient-details"
 import Modal from "../modal/modal";
 
 import {useDispatch, useSelector} from "react-redux";
-import {getIngredientsFromServer} from "../../services/actions/burger-ingredients";
+import {getIngredientsFromServer, INGREDIENT_MODAL_CLOSE, INGREDIENT_MODAL_OPEN} from "../../services/actions/burger-ingredients";
 import Ingredient from "./ingredient";
 
 BurgerConstructor.propTypes = {
@@ -33,7 +33,12 @@ const MenuTab = () => {
 }
 
 export default function BurgerIngredients(props) {
-    const {ingredients, ingredientsRequest} = useSelector(state => state.burgerIngredients)
+    const {ingredients, modal, selectedIngredient} = useSelector(state => ({
+        ingredients: state.burgerIngredients.ingredients,
+        modal: state.burgerIngredients.modal,
+        selectedIngredient:state.burgerIngredients.ingredient
+    }));
+
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -44,18 +49,18 @@ export default function BurgerIngredients(props) {
     const mains = ingredients.filter(item => item.type === "main");
     const sauces = ingredients.filter(item => item.type === "sauce");
 
-    const [visibleModal, setVisibleModal] = React.useState(false);
-    const [selectedIngredient, setSelectedIngredient] = React.useState({});
-
     const handleOpenModal = (e) => {
         const target = e.currentTarget;
         const id = target.getAttribute('id');
-        setSelectedIngredient(props.items.find((item) => item._id === id));
-        setVisibleModal(true);
+        dispatch({
+            type: INGREDIENT_MODAL_OPEN,
+            ingredient: ingredients.find((item) => item._id === id)
+        });
+
     }
 
     const handleCloseModal = () => {
-        setVisibleModal(false);
+        dispatch({type: INGREDIENT_MODAL_CLOSE})
     }
 
     return (
@@ -98,7 +103,7 @@ export default function BurgerIngredients(props) {
                     </div>
                 </div>
             </div>
-            {visibleModal && selectedIngredient &&
+            {modal && selectedIngredient &&
                 <Modal onClose={handleCloseModal} headerText="Детали ингредиента">
                     <IngredientDetails item={selectedIngredient}/>
                 </Modal>
