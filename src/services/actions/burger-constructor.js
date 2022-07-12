@@ -12,6 +12,10 @@ export const ORDER_FAILED = 'ORDER_FAILED';
 export const MODAL_CLOSE = 'MODAL_CLOSE';
 export const MODAL_OPEN = 'MODAL_OPEN';
 
+export const orderFailed =() =>{
+    return {type: ORDER_FAILED};
+}
+
 export const postOrderToServer = (ids) => {
     return function (dispatch) {
         dispatch({
@@ -33,12 +37,12 @@ export const postOrderToServer = (ids) => {
                             orderNumber: data.order.number
                         })
                     } else {
-                        dispatch({type: ORDER_FAILED})
+                        dispatch(orderFailed)
                     }
                 })
                 .catch(err => {
                     console.log(err)
-                    dispatch({type: ORDER_FAILED})
+                    dispatch(orderFailed)
                 })
         }
         createOrder(ids);

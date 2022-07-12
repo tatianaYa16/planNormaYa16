@@ -9,6 +9,10 @@ export const INGREDIENT_MODAL_OPEN = 'INGREDIENT_MODAL_OPEN';
 
 const url = 'https://norma.nomoreparties.space/api/ingredients';
 
+export const ingredientsFailed= () =>{
+    return  {type: INGREDIENTS_FAILED};
+}
+
 export const getIngredientsFromServer = () => {
     return function (dispatch) {
         dispatch({
@@ -24,12 +28,12 @@ export const getIngredientsFromServer = () => {
                             ingredients: data.data,
                         })
                     } else {
-                        dispatch({type: INGREDIENTS_FAILED})
+                        dispatch(ingredientsFailed)
                     }
                 })
                 .catch(err => {
                     console.log(err)
-                    dispatch({type: INGREDIENTS_FAILED})
+                    dispatch(ingredientsFailed)
                 })
         }
         getIngredients();
