@@ -20,12 +20,6 @@ BurgerConstructor.propTypes = {
     items: PropTypes.array.isRequired
 };
 
-const MenuTab = ({currentTab, onTabClick}) => {
-    return (
-        <h1></h1>
-    )
-}
-
 export default function BurgerIngredients(props) {
     const {ingredients, modal, selectedIngredient} = useSelector(state => ({
         ingredients: state.burgerIngredients.ingredients,
