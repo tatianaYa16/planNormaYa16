@@ -14,16 +14,12 @@ export default function Ingredient(props) {
     const {ingredients, bun} = useSelector(state => state.burgerConstructor);
     const {image_large, price, name, _id, type} = props.item;
 
-    let counter ='';
+    let counter = ingredients.filter((ingredient) => ingredient._id === _id).length;
 
     if (type === 'bun'
         && bun
         && bun._id === _id) {
         counter = 2;
-    } else if (type !== 'bun' && counter) {
-        counter = ingredients.filter((ingredient) => ingredient._id === _id).length;
-    } else {
-        counter = '';
     }
 
     const [{opacity}, refIngredient] = useDrag({
