@@ -78,15 +78,15 @@ export default function BurgerIngredients(props) {
     const mainsRef = useRef(null);
     const bunsRef = useRef(null);
 
-    const scrollSauces =()=>{
+    const scrollSauces = () => {
         sauceRef.current.scrollIntoView();
     }
 
-    const scrollBuns =()=>{
+    const scrollBuns = () => {
         bunsRef.current.scrollIntoView();
     }
 
-    const scrollMains =()=>{
+    const scrollMains = () => {
         mainsRef.current.scrollIntoView();
     }
 
@@ -113,8 +113,8 @@ export default function BurgerIngredients(props) {
                      ref={ingredientsContainer}
                      onScroll={handlerScroll}>
                     <div ref={inViewBunRef}>
-                        <p  ref={bunsRef}
-                            className="text text_type_main-medium text_left">
+                        <p ref={bunsRef}
+                           className="text text_type_main-medium text_left">
                             Булки
                         </p>
                         <div className={styles.ingredientItem}>
@@ -125,7 +125,7 @@ export default function BurgerIngredients(props) {
                     </div>
                     <div ref={inViewSauceRef}>
                         <p className="text text_type_main-medium text_left"
-                        ref={sauceRef}>
+                           ref={sauceRef}>
                             Соусы
                         </p>
                         <div className={styles.ingredientItem}>
@@ -135,8 +135,8 @@ export default function BurgerIngredients(props) {
                         </div>
                     </div>
                     <div>
-                        <p  ref={mainsRef}
-                            className="text text_type_main-medium text_left">
+                        <p ref={mainsRef}
+                           className="text text_type_main-medium text_left">
                             Начинки
                         </p>
                         <div className={styles.ingredientItem}>

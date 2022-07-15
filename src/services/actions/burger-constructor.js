@@ -12,7 +12,7 @@ export const ORDER_FAILED = 'ORDER_FAILED';
 export const MODAL_CLOSE = 'MODAL_CLOSE';
 export const MODAL_OPEN = 'MODAL_OPEN';
 
-export const orderFailed =() =>{
+export const orderFailed = () => {
     return {type: ORDER_FAILED};
 }
 
@@ -21,28 +21,30 @@ export const postOrderToServer = (ids) => {
         dispatch({
             type: ORDER_REQUEST
         })
-        dispatch({
-            type: MODAL_OPEN
-        })
         const createOrder = async (ids) => {
             await fetch(BASE_URL + 'orders',
-                { method:'POST',
-                      headers: {'Content-Type': 'application/json'},
-                      body: JSON.stringify({ingredients: ids})})
+                {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ingredients: ids})
+                })
                 .then(checkResponse)
                 .then(data => {
                     if (data && data.success) {
                         dispatch({
                             type: ORDER_SUCCESS,
                             orderNumber: data.order.number
+                        });
+                        dispatch({
+                            type: MODAL_OPEN
                         })
                     } else {
-                        dispatch(orderFailed)
+                        dispatch(orderFailed())
                     }
                 })
                 .catch(err => {
                     console.log(err)
-                    dispatch(orderFailed)
+                    dispatch(orderFailed())
                 })
         }
         createOrder(ids);
