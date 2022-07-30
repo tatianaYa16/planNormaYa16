@@ -1,5 +1,5 @@
 import React from 'react';
-import { createRoot } from 'react-dom/client';
+import {createRoot} from 'react-dom/client';
 import './index.css';
 import App from './components/app/app';
 import reportWebVitals from './reportWebVitals';
@@ -9,19 +9,22 @@ import {HTML5Backend} from "react-dnd-html5-backend";
 import {applyMiddleware, createStore} from "redux";
 import thunk from "redux-thunk";
 import {rootReducer} from "./services/reducers";
-import { composeWithDevTools } from '@redux-devtools/extension';
+import {composeWithDevTools} from '@redux-devtools/extension';
+import {BrowserRouter} from "react-router-dom";
 
-const store = createStore(rootReducer, composeWithDevTools( applyMiddleware(thunk) ));
+const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
 const container = document.getElementById('root');
 const root = createRoot(container!);
 root.render(
-    <React.StrictMode>
-        <DndProvider backend={HTML5Backend}>
-            <Provider store={store}>
-                <App/>
-            </Provider>
-        </DndProvider>
-    </React.StrictMode>
+    <BrowserRouter>
+        <React.StrictMode>
+            <DndProvider backend={HTML5Backend}>
+                <Provider store={store}>
+                    <App/>
+                </Provider>
+            </DndProvider>
+        </React.StrictMode>
+    </BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function
