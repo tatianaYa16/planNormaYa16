@@ -4,6 +4,7 @@ import {Link, Redirect, useHistory} from "react-router-dom";
 import {postRegisterUser} from "../../services/actions/user";
 import {useDispatch, useSelector} from "react-redux";
 import React, {useEffect, useState} from "react";
+import {getCookie} from "../../utils/cookieUtils";
 
 
 const RegisterPage = () => {
@@ -14,6 +15,10 @@ const RegisterPage = () => {
     useEffect(() => {
         if (registerUserRequest)
             history.push('/login');
+        if (isAuth)
+            history.push('/')
+        if (getCookie('accessToken'))
+            history.push('/');
     }, [registerUserRequest, history]);
 
     const [formData, setFormData] = useState({

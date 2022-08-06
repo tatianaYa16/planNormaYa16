@@ -4,6 +4,7 @@ import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components"
 import {Link, Redirect, useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {postForgotPassword} from "../../services/actions/user";
+import {getCookie} from "../../utils/cookieUtils";
 
 
 const ForgotPasswordPage = () => {
@@ -16,6 +17,10 @@ const ForgotPasswordPage = () => {
     useEffect(() => {
         if (forgotPasswordRequest)
             history.push('/reset-password');
+        if (isAuth)
+            history.push('/')
+        if (getCookie('accessToken'))
+            history.push('/');
     }, [forgotPasswordRequest, history]);
 
     const handleChange = (e) => {

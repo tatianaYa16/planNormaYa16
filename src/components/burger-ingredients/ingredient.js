@@ -4,6 +4,7 @@ import React from "react";
 import {useSelector} from "react-redux";
 import {useDrag} from "react-dnd";
 import PropTypes from "prop-types";
+import {Link, useLocation} from "react-router-dom";
 
 Ingredient.propTypes = {
     item: PropTypes.object.isRequired,
@@ -11,6 +12,7 @@ Ingredient.propTypes = {
 };
 
 export default function Ingredient(props) {
+    const location = useLocation();
     const {ingredients, bun} = useSelector(state => state.burgerConstructor);
     const {image_large, price, name, _id, type} = props.item;
 
@@ -31,13 +33,13 @@ export default function Ingredient(props) {
     })
 
     return (
-        <div onClick={props.onClick}
-             id={_id}
-             className={styles.ingredientCard}
-             style={{opacity: opacity}}
-             ref={refIngredient}
-             draggable
-        >
+        <Link onClick={props.onClick}
+              id={_id}
+              className={styles.ingredientCard}
+              style={{opacity: opacity}}
+              ref={refIngredient}
+              draggable
+              to={{pathname: `/ingredients/${_id}`, state: {background: location, ids: _id}}}>
             <div className={styles.counter}>
                 {counter ? <Counter count={counter} size="default"/> : ""}
             </div>
@@ -49,6 +51,6 @@ export default function Ingredient(props) {
             <p className={styles.name + ' text text_type_main-small '}>
                 {name}
             </p>
-        </div>
+        </Link>
     )
 }

@@ -41,17 +41,9 @@ export default function BurgerIngredients(props) {
     const sauces = ingredients.filter(item => item.type === "sauce");
 
     const handleOpenModal = (e) => {
-        const target = e.currentTarget;
-        const id = target.getAttribute('id');
         dispatch({
-            type: INGREDIENT_MODAL_OPEN,
-            ingredient: ingredients.find((item) => item._id === id)
+            type: INGREDIENT_MODAL_OPEN
         });
-
-    }
-
-    const handleCloseModal = () => {
-        dispatch({type: INGREDIENT_MODAL_CLOSE})
     }
 
     const handlerScroll = () => {
@@ -147,11 +139,6 @@ export default function BurgerIngredients(props) {
                     </div>
                 </div>
             </div>
-            {modal && selectedIngredient &&
-                <Modal onClose={handleCloseModal} headerText="Детали ингредиента">
-                    <IngredientDetails item={selectedIngredient}/>
-                </Modal>
-            }
         </section>
     )
 };

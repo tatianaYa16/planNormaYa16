@@ -64,7 +64,7 @@ export const postForgotPassword = (email) => {
                 {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: {email: email}
+                    body: JSON.stringify({email: email})
                 })
                 .then(checkResponse)
                 .then(data => {
@@ -95,7 +95,7 @@ export const postResetPassword = (password, token) => {
                 {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: {password: password, token: token}
+                    body: JSON.stringify({password: password, token: token})
                 })
                 .then(checkResponse)
                 .then(data => {

@@ -1,14 +1,16 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import style from "./login.module.css";
 import {Link, Redirect, useHistory} from "react-router-dom";
 import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useDispatch, useSelector} from "react-redux";
 import {postLoginUser} from "../../services/actions/user";
+import {getCookie} from "../../utils/cookieUtils";
 
 const LoginPage = () => {
     const dispatch = useDispatch();
+    const history = useHistory();
 
-    const {isAuth} = useSelector(state =>state.userReducer);
+    const {isAuth} = useSelector(state => state.userReducer);
 
     const [formData, setFormData] = useState({
         password: "",

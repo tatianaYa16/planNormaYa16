@@ -4,12 +4,13 @@ import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components"
 import {Link, Redirect, useHistory} from "react-router-dom";
 import {postResetPassword} from "../../services/actions/user";
 import {useDispatch, useSelector} from "react-redux";
+import {getCookie} from "../../utils/cookieUtils";
 
 const ResetPasswordPage = () => {
     const history = useHistory();
     const dispatch = useDispatch();
 
-    const {resetPasswordRequest, isAuth} = useSelector(state =>  state.userReducer);
+    const {resetPasswordRequest, isAuth} = useSelector(state => state.userReducer);
 
     const [formData, setFormData] = useState({
         password: "",
@@ -19,6 +20,10 @@ const ResetPasswordPage = () => {
     useEffect(() => {
         if (resetPasswordRequest)
             history.push('/login');
+        if (isAuth)
+            history.push('/')
+        if (getCookie('accessToken'))
+            history.push('/');
     }, [resetPasswordRequest, history]);
 
     const handleChange = (e) => {

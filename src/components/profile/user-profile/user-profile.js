@@ -43,6 +43,16 @@ const UserProfile = () => {
         setChangedInput(false);
     }
 
+    const handleCancel = (e) => {
+        e.preventDefault();
+        setFormData({
+            email: user.email,
+            name: user.name,
+            password: ""
+        })
+        setChangedInput(false);
+    }
+
     return (
         <form onSubmit={handleSubmit} className={`${style.form}`}>
             <div className="mb-6">
@@ -74,6 +84,7 @@ const UserProfile = () => {
             {isChangedInput && (
                 <div className={`${style.form_buttons} mb-20`}>
                     <Button type={"primary"} size="medium">Сохранить</Button>
+                    <Button type={"secondary"} size="medium" onClick={handleCancel}>Отмена</Button>
                 </div>
             )}
         </form>
