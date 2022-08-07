@@ -103,7 +103,7 @@ export const userReducer = (state = initialState, action) => {
             }
         }
         case LOGOUT_USER_SUCCESS: {
-            deleteCookie('token');
+            deleteCookie('accessToken');
             localStorage.removeItem('refreshToken');
             return {
                 ...state,

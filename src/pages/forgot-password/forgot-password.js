@@ -19,6 +19,7 @@ const ForgotPasswordPage = () => {
             history.push('/reset-password');
         if (isAuth)
             history.push('/')
+        console.log(getCookie('accessToken'));
         if (getCookie('accessToken'))
             history.push('/');
     }, [forgotPasswordRequest, history]);

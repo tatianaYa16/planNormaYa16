@@ -297,8 +297,10 @@ export const postUserInfo = (formData) => {
                     'authorization': getCookie('accessToken')
                 },
                 body: JSON.stringify(formData)
-            })
+            })  .then(checkResponse)
                 .then(data => {
+                    console.log(data.success);
+                    console.log(data.user);
                         if (data && data.success) {
                             dispatch({
                                 type: POST_USER_SUCCESS,
@@ -313,8 +315,9 @@ export const postUserInfo = (formData) => {
                 )
                 .catch(err => {
                     if (err.message === 'jwt expired') {
-                        dispatch(refreshToken(patchUser()));
+                        dispatch(refreshToken(postUserInfo(formData)));
                     }
+                    console.log('jwt');
                     console.log(err);
                     dispatch(postUserFailed());
                 })

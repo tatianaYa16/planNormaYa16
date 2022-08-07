@@ -32,15 +32,12 @@ export default function App() {
     const [background, setBackground] = useState(false);
 
     useEffect(() => {
-        console.log("useEffect ingredients.length :" + ingredients.length);
         if (ingredients.length <= 0) {
-            console.log("getIngredientsFromServer");
             dispatch(getIngredientsFromServer());
         }
     }, [dispatch,ingredients.length]);
 
     useEffect(() => {
-        console.log("useEffect 2");
         let background = history.action === 'PUSH' && location.state && location.state.background;
         if (location.state) {
             if (location.state.hasOwnProperty('background')) {
