@@ -1,16 +1,17 @@
 import style from "./register.module.css";
-import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, Redirect, useHistory} from "react-router-dom";
 import {postRegisterUser} from "../../services/actions/user";
 import {useDispatch, useSelector} from "react-redux";
-import React, {useEffect, useState} from "react";
+import React, {FormEvent, useEffect, useState} from "react";
 import {getCookie} from "../../utils/cookieUtils";
+import {Button, PasswordInput} from "../../utils/components";
 
 
 const RegisterPage = () => {
     const history = useHistory();
-    const dispatch =  useDispatch();
-    const {isAuth, registerUserRequest} = useSelector(state => state.userReducer);
+    const dispatch:any =  useDispatch();
+    const {isAuth, registerUserRequest} = useSelector((state:any) => state.userReducer);
 
     useEffect(() => {
         if (registerUserRequest)
@@ -27,14 +28,14 @@ const RegisterPage = () => {
         email: ""
     })
 
-    const handleChange = (e) => {
+    const handleChange = (e:{target: HTMLInputElement}) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
         })
     }
 
-    const handleFormSubmit = (e) => {
+    const handleFormSubmit = (e:FormEvent) => {
        e.preventDefault();
         dispatch(postRegisterUser(formData.password, formData.name, formData.email));
     }

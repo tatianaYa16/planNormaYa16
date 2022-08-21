@@ -24,11 +24,11 @@ import IngredientDetails from "../ingredient-details/ingredient-details";
 
 
 export default function App() {
-    let location = useLocation();
-    const dispatch = useDispatch();
+    let location:any = useLocation();
+    const dispatch:any = useDispatch();
     const history = useHistory();
 
-    const {ingredients} = useSelector(state => state.burgerIngredients);
+    const {ingredients} = useSelector((state:any) => state.burgerIngredients);
     const [background, setBackground] = useState(false);
 
     useEffect(() => {
@@ -80,7 +80,7 @@ export default function App() {
                         </ProtectedRoute>
                     </Switch>
                     {background && <Route path="/ingredients/:id" children={
-                        <Modal onClose={handleClose} caption={'Детали ингредиента'}>
+                        <Modal onClose={handleClose} headerText={'Детали ингредиента'}>
                             <IngredientDetails/>
                         </Modal>
                     }/>}

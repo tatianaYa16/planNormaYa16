@@ -1,12 +1,13 @@
-import React, {useEffect, useState} from "react";
+import React, {ChangeEvent, FormEvent, SyntheticEvent, useEffect, useState} from "react";
 import style from "./user-profile.module.css";
-import {Button, EmailInput, Input} from "@ya.praktikum/react-developer-burger-ui-components";
+import {EmailInput, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useDispatch, useSelector} from "react-redux";
 import {getUserInfo, postUserInfo} from "../../../services/actions/user";
+import {Button} from "../../../utils/components";
 
 const UserProfile = () => {
-    const {user, getUserSuccess} = useSelector(state => state.userReducer);
-    const dispatch = useDispatch();
+    const {user, getUserSuccess} = useSelector((state:any) => state.userReducer);
+    const dispatch:any = useDispatch();
 
     const [formData, setFormData] = useState({
         name: "",
@@ -32,18 +33,19 @@ const UserProfile = () => {
     }, [user])
 
 
-    const handleOnChange = (e) => {
+    const handleOnChange = (e:SyntheticEvent) => {
         e.preventDefault();
-        setFormData({...formData, [e.target.name]: e.target.value});
+        const target = e.target as HTMLInputElement
+        setFormData({...formData, [target.name]: target.value});
         setChangedInput(true);
     }
-    const handleSubmit = (e) => {
+    const handleSubmit = (e:FormEvent) => {
         e.preventDefault();
         dispatch(postUserInfo(formData));
         setChangedInput(false);
     }
 
-    const handleCancel = (e) => {
+    const handleCancel = (e:SyntheticEvent) => {
         e.preventDefault();
         setFormData({
             email: user.email,

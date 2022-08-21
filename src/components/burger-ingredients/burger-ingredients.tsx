@@ -1,11 +1,6 @@
 import React, {useEffect, useRef, useMemo} from 'react';
-import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './burger-ingredients.module.css';
-import PropTypes from "prop-types";
-import BurgerConstructor from "../burger-constructor/burger-constructor";
-import IngredientDetails from "../ingredient-details/ingredient-details"
-import Modal from "../modal/modal";
-
+import {ITypeIngredient} from "../../utils/types";
 import {useDispatch, useSelector} from "react-redux";
 import {
     getIngredientsFromServer,
@@ -13,21 +8,18 @@ import {
     INGREDIENT_MODAL_OPEN
 } from "../../services/actions/burger-ingredients";
 import Ingredient from "./ingredient";
-
 import {useInView} from 'react-intersection-observer';
+import {Tab} from "../../utils/components";
 
-BurgerConstructor.propTypes = {
-    items: PropTypes.array.isRequired
-};
 
-export default function BurgerIngredients(props) {
-    const {ingredients, modal, selectedIngredient} = useSelector(state => ({
+export default function BurgerIngredients() {
+    const {ingredients} = useSelector((state: any) => ({
         ingredients: state.burgerIngredients.ingredients,
         modal: state.burgerIngredients.modal,
         selectedIngredient: state.burgerIngredients.ingredient
     }));
 
-    const dispatch = useDispatch();
+    const dispatch: any = useDispatch();
 
     useEffect(() => {
         dispatch(getIngredientsFromServer());
@@ -35,12 +27,11 @@ export default function BurgerIngredients(props) {
 
 
     const ingredientsContainer = useRef(null);
+    const buns = ingredients.filter((item: ITypeIngredient) => item.type === "bun");
+    const mains = ingredients.filter((item: ITypeIngredient) => item.type === "main");
+    const sauces = ingredients.filter((item: ITypeIngredient) => item.type === "sauce");
 
-    const buns = ingredients.filter(item => item.type === "bun");
-    const mains = ingredients.filter(item => item.type === "main");
-    const sauces = ingredients.filter(item => item.type === "sauce");
-
-    const handleOpenModal = (e) => {
+    const handleOpenModal = () => {
         dispatch({
             type: INGREDIENT_MODAL_OPEN
         });
@@ -66,20 +57,20 @@ export default function BurgerIngredients(props) {
         return 'buns';
     }, [inViewSauce, inViewBun]);
 
-    const sauceRef = useRef(null);
-    const mainsRef = useRef(null);
-    const bunsRef = useRef(null);
+    const sauceRef = useRef<HTMLDivElement>(null);
+    const mainsRef = useRef<HTMLDivElement>(null);
+    const bunsRef = useRef<HTMLDivElement>(null);
 
     const scrollSauces = () => {
-        sauceRef.current.scrollIntoView();
+        sauceRef.current?.scrollIntoView();
     }
 
     const scrollBuns = () => {
-        bunsRef.current.scrollIntoView();
+        bunsRef.current?.scrollIntoView();
     }
 
     const scrollMains = () => {
-        mainsRef.current.scrollIntoView();
+        mainsRef.current?.scrollIntoView();
     }
 
     return (
@@ -110,7 +101,7 @@ export default function BurgerIngredients(props) {
                             Булки
                         </p>
                         <div className={styles.ingredientItem}>
-                            {buns.map((bun) => (
+                            {buns.map((bun: ITypeIngredient) => (
                                 <Ingredient key={bun._id} item={bun} onClick={handleOpenModal}/>
                             ))}
                         </div>
@@ -121,7 +112,7 @@ export default function BurgerIngredients(props) {
                             Соусы
                         </p>
                         <div className={styles.ingredientItem}>
-                            {sauces.map((sauce) => (
+                            {sauces.map((sauce: ITypeIngredient) => (
                                 <Ingredient key={sauce._id} item={sauce} onClick={handleOpenModal}/>
                             ))}
                         </div>
@@ -132,7 +123,7 @@ export default function BurgerIngredients(props) {
                             Начинки
                         </p>
                         <div className={styles.ingredientItem}>
-                            {mains.map((main) => (
+                            {mains.map((main: ITypeIngredient) => (
                                 <Ingredient key={main._id} item={main} onClick={handleOpenModal}/>
                             ))}
                         </div>
