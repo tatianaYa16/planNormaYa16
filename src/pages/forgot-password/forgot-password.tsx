@@ -1,18 +1,19 @@
-import React, { FormEvent, useEffect, useState} from "react";
+import React, {FormEvent, useEffect, useState} from "react";
 import styles from "./forgot-password.module.css";
-import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, Redirect, useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {postForgotPassword} from "../../services/actions/user";
 import {getCookie} from "../../utils/cookieUtils";
+import {Button} from "../../utils/components";
 
 
 const ForgotPasswordPage = () => {
     const history = useHistory();
-    const dispatch:any =  useDispatch();
+    const dispatch: any = useDispatch();
     const [email, setEmail] = useState<string>("");
 
-    const {forgotPasswordRequest, isAuth} = useSelector((state:any) =>  state.userReducer);
+    const {forgotPasswordRequest, isAuth} = useSelector((state: any) => state.userReducer);
 
     useEffect(() => {
         if (forgotPasswordRequest)
@@ -24,10 +25,10 @@ const ForgotPasswordPage = () => {
             history.push('/');
     }, [forgotPasswordRequest, history]);
 
-    const handleChange = (e:{target: HTMLInputElement}) => {
+    const handleChange = (e: { target: HTMLInputElement }) => {
         setEmail(e.target.value);
     }
-    const handleSubmitForm = (e:FormEvent) => {
+    const handleSubmitForm = (e: FormEvent) => {
         e.preventDefault();
         dispatch(postForgotPassword(email));
     }
@@ -52,7 +53,6 @@ const ForgotPasswordPage = () => {
                         />
                     </div>
                     <div className={`${styles.form_button} mb-20`}>
-                        {/* @ts-ignore */}
                         <Button type={"primary"} size="medium">Восстановить</Button>
                     </div>
                 </form>

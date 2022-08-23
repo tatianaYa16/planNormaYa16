@@ -3,9 +3,10 @@ import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, Redirect, useHistory} from "react-router-dom";
 import {postRegisterUser} from "../../services/actions/user";
 import {useDispatch, useSelector} from "react-redux";
-import React, {FormEvent, useEffect, useState} from "react";
+import React, {ChangeEvent, FormEvent, useEffect, useState} from "react";
 import {getCookie} from "../../utils/cookieUtils";
 import {Button, PasswordInput} from "../../utils/components";
+import {useForm} from "../../hook/useForm";
 
 
 const RegisterPage = () => {
@@ -28,12 +29,13 @@ const RegisterPage = () => {
         email: ""
     })
 
-    const handleChange = (e:{target: HTMLInputElement}) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        })
-    }
+    const {values, handleChange, setValues} = useForm({});
+    // const handleChange = (e:ChangeEvent<HTMLInputElement>) => {
+    //     setFormData({
+    //         ...formData,
+    //         [e.target.name]: e.target.value
+    //     })
+    // }
 
     const handleFormSubmit = (e:FormEvent) => {
        e.preventDefault();

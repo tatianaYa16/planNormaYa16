@@ -21,9 +21,9 @@ export default function BurgerIngredients() {
 
     const dispatch: any = useDispatch();
 
-    useEffect(() => {
-        dispatch(getIngredientsFromServer());
-    }, [dispatch]);
+    // useEffect(() => {
+    //     dispatch(getIngredientsFromServer());
+    // }, [dispatch]);
 
 
     const ingredientsContainer = useRef(null);

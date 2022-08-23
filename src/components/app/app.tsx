@@ -21,35 +21,40 @@ import {
     INGREDIENT_MODAL_CLOSE
 } from "../../services/actions/burger-ingredients";
 import IngredientDetails from "../ingredient-details/ingredient-details";
+import {ILocation} from "../../utils/types";
+
 
 
 export default function App() {
-    let location:any = useLocation();
-    const dispatch:any = useDispatch();
+    const location:any = useLocation();
+    const dispatch: any = useDispatch();
     const history = useHistory();
 
-    const {ingredients} = useSelector((state:any) => state.burgerIngredients);
-    const [background, setBackground] = useState(false);
+    const {ingredients} = useSelector((state: any) => state.burgerIngredients);
+   // const [background, setBackground] = useState(false);
 
     useEffect(() => {
         if (ingredients.length <= 0) {
             dispatch(getIngredientsFromServer());
         }
-    }, [dispatch,ingredients.length]);
+    }, [dispatch, ingredients]);
 
-    useEffect(() => {
-        let background = history.action === 'PUSH' && location.state && location.state.background;
-        if (location.state) {
-            if (location.state.hasOwnProperty('background')) {
-                background = location.state.background;
-            }
-        }
-        setBackground(background);
-    }, [location.state, history.action]);
+    // useEffect(() => {
+    //     let background = history.action === 'PUSH' && location.state && location.state.background;
+    //     if (location.state) {
+    //         if (location.state.hasOwnProperty('background')) {
+    //             background = location.state.background;
+    //         }
+    //     }
+    //     setBackground(background);
+    // }, [location.state, history.action]);
+
+    const background = location.state?.background;
 
     const handleClose = () => {
         dispatch({type: INGREDIENT_MODAL_CLOSE});
-        history.push("/");
+       // history.push("/");
+        history.goBack();
     }
 
 
@@ -58,7 +63,7 @@ export default function App() {
             <div className={styles.App}>
                 <AppHeader/>
                 <main className={styles.mainBurger}>
-                    <Switch>
+                    <Switch location={background || location}>
                         <Route path="/register" exact={true}>
                             <RegisterPage/>
                         </Route>

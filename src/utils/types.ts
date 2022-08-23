@@ -12,3 +12,9 @@ export interface ITypeIngredient {
     uuid: number;
     _id: string;
 }
+
+export interface ILocation {
+    from: Location;
+    background: boolean;
+    pathname: string;
+}

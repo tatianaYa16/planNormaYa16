@@ -21,6 +21,7 @@ import {
 import IngredientItem from "./ingredient-item/ingredient-item";
 import {ITypeIngredient} from "../../utils/types";
 import {Button} from "../../utils/components";
+import {userReducer} from "../../services/reducers/user";
 
 BurgerConstructor.propTypes = {
     items: PropTypes.array
@@ -33,7 +34,7 @@ export default function BurgerConstructor() {
             bun: state.burgerConstructor.bun,
             orderNumber: state.burgerConstructor.orderNumber,
             modal: state.burgerConstructor.modal,
-            isAuth: state.burgerConstructor.isAuth
+            isAuth: state.userReducer.isAuth
         }));
 
     const dispatch:any = useDispatch();
@@ -79,7 +80,8 @@ export default function BurgerConstructor() {
 
     const handleOpenModal = () => {
         if (!bun) return alert('Добавте сначала булочку.');
-        if (!isAuth) history.push('/login');
+        console.log(isAuth);
+        if (!isAuth)  return history.push('/login');
         const ids = [...ingredients.map((item:ITypeIngredient) => item._id), bun._id, bun._id];
         dispatch(postOrderToServer(ids));
     }

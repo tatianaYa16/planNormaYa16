@@ -1,36 +1,39 @@
 import React, {useState, useEffect, FormEvent} from "react";
 import style from "./login.module.css";
-import {Link, Redirect, useHistory} from "react-router-dom";
-import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Link, Redirect, useHistory, useLocation} from "react-router-dom";
+import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useDispatch, useSelector} from "react-redux";
 import {postLoginUser} from "../../services/actions/user";
-import {PasswordInput} from "../../utils/components";
+import {PasswordInput, Button} from "../../utils/components";
+import {ILocation} from "../../utils/types";
 
 const LoginPage = () => {
-    const dispatch:any = useDispatch();
+    const dispatch: any = useDispatch();
     const history = useHistory();
+    const location = useLocation<ILocation>();
 
-    const {isAuth} = useSelector((state:any) => state.userReducer);
+    const {isAuth} = useSelector((state: any) => state.userReducer);
 
     const [formData, setFormData] = useState({
         password: "",
         email: ""
     })
 
-    const handleChange = (e:{target: HTMLInputElement}) => {
+    const handleChange = (e: { target: HTMLInputElement }) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
         })
     }
 
-    const handleFormSubmit = (e:FormEvent) => {
+    const handleFormSubmit = (e: FormEvent) => {
         e.preventDefault();
         dispatch(postLoginUser(formData.password, formData.email));
     }
 
     if (isAuth) {
-        return (<Redirect to={{pathname: '/'}}/>)
+        const path = location?.state?.from.pathname || '/'
+        return (<Redirect to={{pathname: path}}/>)
     }
     return (
         <div className={style.container}>
@@ -57,7 +60,6 @@ const LoginPage = () => {
                         />
                     </div>
                     <div className={`${style.form_button} mb-20`}>
-                        {/* @ts-ignore */}
                         <Button type={"primary"} size="medium">Войти</Button>
                     </div>
                 </form>
