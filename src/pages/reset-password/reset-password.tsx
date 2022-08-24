@@ -1,4 +1,4 @@
-import React, {FormEvent, useEffect, useState} from "react";
+import React, {ChangeEvent, FormEvent, useEffect, useState} from "react";
 import style from './reset-password.module.css';
 import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, Redirect, useHistory} from "react-router-dom";
@@ -27,7 +27,7 @@ const ResetPasswordPage = () => {
             history.push('/');
     }, [resetPasswordRequest, history]);
 
-    const handleChange = (e:{target: HTMLInputElement}) => {
+    const handleChange = (e:ChangeEvent<HTMLInputElement>) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value

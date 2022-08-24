@@ -1,4 +1,4 @@
-import React, {useState, useEffect, FormEvent} from "react";
+import React, {useState, useEffect, FormEvent, ChangeEvent} from "react";
 import style from "./login.module.css";
 import {Link, Redirect, useHistory, useLocation} from "react-router-dom";
 import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
@@ -19,7 +19,7 @@ const LoginPage = () => {
         email: ""
     })
 
-    const handleChange = (e: { target: HTMLInputElement }) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value

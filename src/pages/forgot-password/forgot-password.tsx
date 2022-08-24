@@ -1,4 +1,4 @@
-import React, {FormEvent, useEffect, useState} from "react";
+import React, {ChangeEvent, FormEvent, useEffect, useState} from "react";
 import styles from "./forgot-password.module.css";
 import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, Redirect, useHistory} from "react-router-dom";
@@ -25,7 +25,7 @@ const ForgotPasswordPage = () => {
             history.push('/');
     }, [forgotPasswordRequest, history]);
 
-    const handleChange = (e: { target: HTMLInputElement }) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setEmail(e.target.value);
     }
     const handleSubmitForm = (e: FormEvent) => {

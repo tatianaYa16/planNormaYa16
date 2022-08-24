@@ -1,15 +1,17 @@
-import { Redirect, Route } from 'react-router-dom';
+import {Redirect, Route, RouteProps} from 'react-router-dom';
 import {useSelector} from "react-redux";
-import PropTypes from "prop-types";
+import {FC, ReactNode} from "react";
+import {getCookie} from "../../utils/cookieUtils";
 
-const ProtectedRoute = ({ children, exact, path }) => {
-    const {isAuth} = useSelector(state => state.userReducer);
+
+const ProtectedRoute:  FC<{children:ReactNode; path:string; exact:boolean}>= ({ children, exact, path }) => {
+   // const {isAuth} = useSelector((state:any) => state.userReducer);
     return (
         <Route
             exact={exact}
             path={path}
             render={({ location }) =>
-                isAuth ? (
+                getCookie('accessToken') ? (
                     children
                 ) : (
                     <Redirect
@@ -23,10 +25,4 @@ const ProtectedRoute = ({ children, exact, path }) => {
         />
     );
 }
-
-// ProtectedRoute.propTypes = {
-//     children: PropTypes.node.isRequired,
-//     exact: PropTypes.bool,
-//     path: PropTypes.string.isRequired
-// }
 export default ProtectedRoute;
