@@ -2,7 +2,10 @@ import React, {FC, useRef} from 'react';
 import {useDispatch} from "react-redux";
 import {useDrag, useDrop, XYCoord} from "react-dnd";
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import {CONSTRUCTOR_REMOVE_INGREDIENT, CONSTRUCTOR_MOVE_INGREDIENT} from '../../../services/actions/burger-constructor';
+import {
+    constructorMoveIngredient,
+    constructorRemoveIngredient
+} from '../../../services/actions/burger-constructor';
 import {ITypeIngredient} from "../../../utils/types";
 
 type TCard<T> = {
@@ -19,10 +22,7 @@ const IngredientItem: FC<TCard<ITypeIngredient>> = (props) => {
     const itemRef = useRef<HTMLDivElement>(null);
 
     const handleRemove = () => {
-        dispatch({
-            type: CONSTRUCTOR_REMOVE_INGREDIENT,
-            id: uuid
-        })
+        dispatch(constructorRemoveIngredient(uuid));
     }
 
     const [{isDragging}, drag] = useDrag({
@@ -49,7 +49,7 @@ const IngredientItem: FC<TCard<ITypeIngredient>> = (props) => {
             }
             const hoverBoundingRect = itemRef.current?.getBoundingClientRect();
             const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-            const clientOffset: XYCoord|null = monitor.getClientOffset();
+            const clientOffset: XYCoord | null = monitor.getClientOffset();
             if (clientOffset) {
                 const hoverClientY = clientOffset.y - hoverBoundingRect.top;
                 if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
@@ -59,12 +59,7 @@ const IngredientItem: FC<TCard<ITypeIngredient>> = (props) => {
                     return;
                 }
             }
-            dispatch({
-                type: CONSTRUCTOR_MOVE_INGREDIENT,
-                dragIndex,
-                hoverIndex
-            })
-
+            dispatch(constructorMoveIngredient(dragIndex, hoverIndex));
             item.index = hoverIndex
         },
     });

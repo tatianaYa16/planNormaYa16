@@ -13,10 +13,10 @@ import {useDispatch, useSelector} from "react-redux";
 import {useDrop} from "react-dnd";
 import {useHistory} from "react-router-dom";
 import {
-    CONSTRUCTOR_ADD_INGREDIENT,
-    CONSTRUCTOR_ADD_BUN,
-    MODAL_CLOSE,
-    postOrderToServer
+    postOrderThunk,
+    constructorAddBun,
+    modalClose,
+    constructorAddIngredient
 } from '../../services/actions/burger-constructor'
 import IngredientItem from "./ingredient-item/ingredient-item";
 import {ITypeIngredient} from "../../utils/types";
@@ -37,7 +37,7 @@ export default function BurgerConstructor() {
             isAuth: state.userReducer.isAuth
         }));
 
-    const dispatch:any = useDispatch();
+    const dispatch: any = useDispatch();
     const history = useHistory();
 
     const [{isHover}, dropIngredients] = useDrop({
@@ -45,11 +45,8 @@ export default function BurgerConstructor() {
         collect: monitor => ({
             isHover: monitor.isOver()
         }),
-        drop:(item: ITypeIngredient)=>{
-            dispatch({
-                type: CONSTRUCTOR_ADD_INGREDIENT,
-                item: {...item, uuid: uuidv4()}
-            })
+        drop: (item: ITypeIngredient) => {
+            dispatch(constructorAddIngredient({...item, uuid: uuidv4()}));
         }
     });
 
@@ -59,15 +56,12 @@ export default function BurgerConstructor() {
             isHoverBun: monitor.isOver()
         }),
         drop(item) {
-            dispatch({
-                type: CONSTRUCTOR_ADD_BUN,
-                bun: item
-            })
+            dispatch(constructorAddBun(item));
         }
     });
 
     const totalPrice = useMemo(() => {
-        let price = ingredients.reduce((sum:number, item:ITypeIngredient) => {
+        let price = ingredients.reduce((sum: number, item: ITypeIngredient) => {
             return item.price + sum;
         }, 0);
         price += bun && bun.price * 2;
@@ -75,15 +69,15 @@ export default function BurgerConstructor() {
     }, [ingredients, bun])
 
     const handleCloseModal = () => {
-        dispatch({type: MODAL_CLOSE})
+        dispatch(modalClose());
     }
 
     const handleOpenModal = () => {
         if (!bun) return alert('Добавте сначала булочку.');
         console.log(isAuth);
-        if (!isAuth)  return history.push('/login');
-        const ids = [...ingredients.map((item:ITypeIngredient) => item._id), bun._id, bun._id];
-        dispatch(postOrderToServer(ids));
+        if (!isAuth) return history.push('/login');
+        const ids = [...ingredients.map((item: ITypeIngredient) => item._id), bun._id, bun._id];
+        dispatch(postOrderThunk(ids));
     }
 
     return (
@@ -100,7 +94,7 @@ export default function BurgerConstructor() {
                     : ""}
                 <div ref={dropIngredients}
                      className={`${styles.ingredients}`}>
-                    {ingredients.map((ingredient:ITypeIngredient, index:number) => (
+                    {ingredients.map((ingredient: ITypeIngredient, index: number) => (
                         <IngredientItem key={ingredient.uuid} index={index} data={ingredient}/>
                     ))}
                 </div>
@@ -116,7 +110,7 @@ export default function BurgerConstructor() {
             </div>
             <div className={styles.order}>
                 <p className={styles.orderCost}>
-                    {totalPrice}
+                    {totalPrice?totalPrice:0}
                 </p>
                 <CurrencyIcon type="primary"/>
                 <Button type="primary" size="large" onClick={handleOpenModal}>

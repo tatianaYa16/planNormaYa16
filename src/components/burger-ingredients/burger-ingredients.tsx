@@ -3,9 +3,7 @@ import styles from './burger-ingredients.module.css';
 import {ITypeIngredient} from "../../utils/types";
 import {useDispatch, useSelector} from "react-redux";
 import {
-    getIngredientsFromServer,
-    INGREDIENT_MODAL_CLOSE,
-    INGREDIENT_MODAL_OPEN
+    ingredientModalOpen
 } from "../../services/actions/burger-ingredients";
 import Ingredient from "./ingredient";
 import {useInView} from 'react-intersection-observer';
@@ -20,21 +18,13 @@ export default function BurgerIngredients() {
     }));
 
     const dispatch: any = useDispatch();
-
-    // useEffect(() => {
-    //     dispatch(getIngredientsFromServer());
-    // }, [dispatch]);
-
-
     const ingredientsContainer = useRef(null);
     const buns = ingredients.filter((item: ITypeIngredient) => item.type === "bun");
     const mains = ingredients.filter((item: ITypeIngredient) => item.type === "main");
     const sauces = ingredients.filter((item: ITypeIngredient) => item.type === "sauce");
 
     const handleOpenModal = () => {
-        dispatch({
-            type: INGREDIENT_MODAL_OPEN
-        });
+        dispatch(ingredientModalOpen());
     }
 
     const handlerScroll = () => {

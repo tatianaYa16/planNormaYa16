@@ -17,25 +17,24 @@ import {
     useLocation
 } from "react-router-dom";
 import {
-    getIngredientsFromServer,
-    INGREDIENT_MODAL_CLOSE
+    getIngredientsThunk,
+    ingredientModalClose
 } from "../../services/actions/burger-ingredients";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import {ILocation} from "../../utils/types";
 
 
-
 export default function App() {
-    const location:any = useLocation();
+    const location: any = useLocation();
     const dispatch: any = useDispatch();
     const history = useHistory();
 
     const {ingredients} = useSelector((state: any) => state.burgerIngredients);
-   // const [background, setBackground] = useState(false);
+    // const [background, setBackground] = useState(false);
 
     useEffect(() => {
         if (ingredients.length <= 0) {
-            dispatch(getIngredientsFromServer());
+            dispatch(getIngredientsThunk());
         }
     }, [dispatch, ingredients]);
 
@@ -52,8 +51,7 @@ export default function App() {
     const background = location.state?.background;
 
     const handleClose = () => {
-        dispatch({type: INGREDIENT_MODAL_CLOSE});
-       // history.push("/");
+        dispatch(ingredientModalClose());
         history.goBack();
     }
 
