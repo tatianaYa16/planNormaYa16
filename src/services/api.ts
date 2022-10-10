@@ -6,6 +6,10 @@ export type TResponseBody<TDataKey extends string = '', TDataType = {}> = {
     message?: string;
     headers?: Headers;
 };
+export type Token = {
+    accessToken:string;
+    refreshToken:string;
+}
 
 interface CustomBody<T extends any> extends Body {
     json(): Promise<T>;

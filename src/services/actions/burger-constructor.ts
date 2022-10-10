@@ -3,16 +3,7 @@ import {checkResponse} from '../../utils/response-utils';
 import {TResponseBody} from '../api';
 import {ITypeIngredient} from "../../utils/types";
 
-// export const CONSTRUCTOR_ADD_BUN: 'CONSTRUCTOR_ADD_BUN' = 'CONSTRUCTOR_ADD_BUN';
-// export const CONSTRUCTOR_ADD_INGREDIENT: 'CONSTRUCTOR_ADD_INGREDIENT' = 'CONSTRUCTOR_ADD_INGREDIENT';
-// export const CONSTRUCTOR_REMOVE_INGREDIENT: 'CONSTRUCTOR_REMOVE_INGREDIENT' = 'CONSTRUCTOR_REMOVE_INGREDIENT';
-// export const CONSTRUCTOR_MOVE_INGREDIENT: 'CONSTRUCTOR_MOVE_INGREDIENT' = 'CONSTRUCTOR_MOVE_INGREDIENT';
-//
-// export const ORDER_REQUEST: 'ORDER_REQUEST' = 'ORDER_REQUEST';
-// export const ORDER_SUCCESS: 'ORDER_SUCCESS' = 'ORDER_SUCCESS';
-// export const ORDER_FAILED: 'ORDER_FAILED' = 'ORDER_FAILED';
-// export const MODAL_CLOSE: 'MODAL_CLOSE' = 'MODAL_CLOSE';
-// export const MODAL_OPEN: 'MODAL_OPEN' = 'MODAL_OPEN';
+
 import {
     CONSTRUCTOR_ADD_BUN,
     CONSTRUCTOR_ADD_INGREDIENT,
@@ -24,6 +15,7 @@ import {
     ORDER_REQUEST,
     ORDER_SUCCESS
 } from '../constants';
+
 import {AppDispatch, AppThunk} from "../types";
 
 export interface IConstructorAddBun {

@@ -1,5 +1,4 @@
 import {
-    FORGOT_PASSWORD_REQUEST,
     FORGOT_PASSWORD_FAILED,
     FORGOT_PASSWORD_SUCCESS,
     RESET_PASSWORD_REQUEST,
@@ -21,31 +20,45 @@ import {
     POST_USER_SUCCESS,
     POST_USER_FAILED
 
-} from "../actions/user";
+} from '../constants';
+import {TUserActions} from "../actions/user";
+
 import {setCookie, deleteCookie} from "../../utils/cookieUtils";
 import {saveTokens} from "../../utils/response-utils";
+import {TUser} from "../api";
 
-
-const initialState = {
+export type TUserState = {
+    forgotPasswordRequest: boolean,
+    resetPasswordRequest: boolean,
+    registerUserRequest: boolean,
+    isAuth: boolean,
+    user?: TUser,
+    getUserSuccess: boolean,
+    getUserRequest: boolean,
+    getUserFailed: boolean,
+    postUserSuccess: boolean,
+    postUserRequest: boolean,
+    postUserFailed: boolean,
+    accessToken?: boolean,
+    refreshToken?: boolean
+};
+const initialState:TUserState = {
     forgotPasswordRequest: false,
     resetPasswordRequest: false,
     registerUserRequest: false,
     isAuth: false,
-    user: {
-        name: "",
-        email: ""
-    },
+    user: undefined,
     getUserSuccess: false,
     getUserRequest: false,
     getUserFailed: false,
     postUserSuccess: false,
     postUserRequest: false,
-    postUserFailed:false,
-    accessToken: null,
-    refreshToken: null
+    postUserFailed: false,
+    accessToken: undefined,
+    refreshToken: undefined
 }
 
-export const userReducer = (state = initialState, action) => {
+export const userReducer = (state = initialState, action:TUserActions):TUserState => {
     switch (action.type) {
         case FORGOT_PASSWORD_SUCCESS: {
             return {
@@ -72,7 +85,7 @@ export const userReducer = (state = initialState, action) => {
             }
         }
         case REGISTER_USER_SUCCESS: {
-            saveTokens(action.payload.refreshToken, action.payload.accessToken);
+            saveTokens({refreshToken:action.refreshToken,accessToken: action.accessToken});
             return {
                 ...state,
                 registerUserRequest: true
@@ -85,10 +98,10 @@ export const userReducer = (state = initialState, action) => {
             }
         }
         case LOGIN_USER_SUCCESS: {
-            saveTokens(action.payload.refreshToken, action.payload.accessToken);
+            saveTokens({refreshToken:action.refreshToken,accessToken: action.accessToken});
             return {
                 ...state,
-                user: {name: action.payload.name, email: action.payload.email},
+                user: <TUser>{name: action.user.name, email: action.user.email},
                 isAuth: true
             }
         }
@@ -96,10 +109,7 @@ export const userReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isAuth: false,
-                user: {
-                    name: "",
-                    email: ""
-                }
+                user: undefined
             }
         }
         case LOGOUT_USER_SUCCESS: {
@@ -107,17 +117,14 @@ export const userReducer = (state = initialState, action) => {
             localStorage.removeItem('refreshToken');
             return {
                 ...state,
-                user: {
-                    name: "",
-                    email: ""
-                },
+                user: undefined,
                 isAuth: false
             }
         }
         case GET_USER_SUCCESS: {
             return {
                 ...state,
-                user:action.payload.user,
+                user: action.user,
                 getUserFailed: false,
                 getUserRequest: false,
                 getUserSuccess: true
@@ -151,7 +158,7 @@ export const userReducer = (state = initialState, action) => {
         case POST_USER_SUCCESS: {
             return {
                 ...state,
-                user: action.payload.user,
+                user: action.user,
                 postUserFailed: false,
                 postUserSuccess: true,
                 postUserRequest: false
