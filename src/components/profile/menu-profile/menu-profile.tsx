@@ -3,9 +3,10 @@ import style from "./menu-profile.module.css";
 import {NavLink, useHistory} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {postLogout} from "../../../services/actions/user";
+import {AppDispatch} from "../../../services/types";
 
 const MenuProfile = () => {
-    const dispatch:any = useDispatch();
+    const dispatch:AppDispatch = useDispatch();
     const history:any = useHistory();
     const handleClick = () => {
         // @ts-ignore

@@ -1,0 +1,33 @@
+.column {
+    display: flex;
+    flex-direction: column;
+    width: 608px;
+}
+
+.column_profile {
+    display: flex;
+    flex-direction: column;
+    width: 860px;
+    margin-left: auto;
+}
+
+.list {
+    width: 700px;
+    height: 75vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.item {
+    width: 750px;
+}
+
+.item_profile {
+    width: 844px;
+}
+
+.orders {
+    width: calc(50% - 30px);
+    overflow: auto;
+    max-height: calc(100vh - 200px);
+}

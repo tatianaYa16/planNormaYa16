@@ -397,7 +397,7 @@ export const getUserInfo: AppThunk = () => {
                 headers: {
                     'Accept': 'application/json, text/plain, */*',
                     'Content-Type': 'application/json',
-                    Authorization: `Bearer ${getCookie('accessToken')}`
+                    Authorization: `${getCookie('accessToken')}`
                 },
             })
                 .then(checkResponse)

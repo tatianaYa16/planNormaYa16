@@ -40,7 +40,7 @@ export default function AppHeader() {
                     <BurgerIcon type="primary"/>
                     <span className="text text_type_main-default ml-2">Конструктор</span>
                 </NavLink>
-                <NavLink to={"/profile/orders"}
+                <NavLink to={"/feed"}
                          activeClassName={styles.header_link_active}
                          className={styles.header_link + ' pr-5 '}>
                     <ListIcon type="secondary"/>

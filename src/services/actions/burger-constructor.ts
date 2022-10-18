@@ -17,6 +17,7 @@ import {
 } from '../constants';
 
 import {AppDispatch, AppThunk} from "../types";
+import {getCookie} from "../../utils/cookieUtils";
 
 export interface IConstructorAddBun {
     readonly type: typeof CONSTRUCTOR_ADD_BUN;
@@ -72,16 +73,16 @@ export type TBurgerConstructorActions =
     | IConstructorRemoveIngredient
     | IConstructorMoveIngredient;
 
-export const constructorRemoveIngredient = (id:number):IConstructorRemoveIngredient => {
+export const constructorRemoveIngredient = (id: number): IConstructorRemoveIngredient => {
     return {
-        type:CONSTRUCTOR_REMOVE_INGREDIENT,
+        type: CONSTRUCTOR_REMOVE_INGREDIENT,
         id
     }
 }
 
-export const constructorMoveIngredient = (dragIndex:number, hoverIndex:number):IConstructorMoveIngredient => {
+export const constructorMoveIngredient = (dragIndex: number, hoverIndex: number): IConstructorMoveIngredient => {
     return {
-        type:CONSTRUCTOR_MOVE_INGREDIENT,
+        type: CONSTRUCTOR_MOVE_INGREDIENT,
         dragIndex,
         hoverIndex
     }
@@ -126,7 +127,11 @@ export const orderSuccess = (orderNumber: number): IOrderSuccess => {
 export const createOrder = async (ids: ReadonlyArray<Number>): Promise<TResponseBody<'order', any>> =>
     await fetch(BASE_URL + 'orders', {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json',
+            Authorization: `${getCookie('accessToken')}`
+        },
         body: JSON.stringify({ingredients: ids})
     })
         .then(checkResponse)

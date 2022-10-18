@@ -11,6 +11,7 @@ import {
 import {
     Tab as TabUI,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import {TOrder} from "../services/types/types";
 
 export const Button: React.FC<{
     type?: 'secondary' | 'primary';
@@ -37,3 +38,7 @@ export const Tab: React.FC<{
     onClick: (value: string) => void;
     children: React.ReactNode;
 }>= TabUI;
+
+export interface IFeedDetails {
+    orders: Array<TOrder> | undefined;
+}

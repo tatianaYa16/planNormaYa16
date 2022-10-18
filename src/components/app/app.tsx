@@ -21,7 +21,9 @@ import {
     ingredientModalClose
 } from "../../services/actions/burger-ingredients";
 import IngredientDetails from "../ingredient-details/ingredient-details";
-import {ILocation} from "../../utils/types";
+import {FeedPage} from "../../pages/order-feed/order-feed";
+import {OrderPage} from "../../pages/order-page/order-page";
+import FeedDetails from "../feed-details/feed-details";
 
 
 export default function App() {
@@ -49,6 +51,8 @@ export default function App() {
     // }, [location.state, history.action]);
 
     const background = location.state?.background;
+    const number = location.state && location.state.number;
+    const orders = location.state && location.state.orders;
 
     const handleClose = () => {
         dispatch(ingredientModalClose());
@@ -77,11 +81,34 @@ export default function App() {
                         <Route path="/reset-password" exact={true}>
                             <ResetPasswordPage/>
                         </Route>
-                        <Route path={"/ingredients/:id"} exact={true} children={<IngredientDetails/>}/>
-                        <ProtectedRoute path="/profile" exact={true}>
+                        <Route path='/feed' exact={true}>
+                            <FeedPage/>
+                        </Route>
+                        <Route path='/feed/:id' exact={true} children={<OrderPage/>}/>
+                        <Route path='/ingredients/:id' exact={true} children={<IngredientDetails/>}/>
+                        <ProtectedRoute path="/profile" exact={false}>
                             <Profile/>
                         </ProtectedRoute>
                     </Switch>
+                    {background && (
+                        <Route path='/feed/:id'>
+                            <Modal
+                                headerText={`#${number}`}
+                                onClose={handleClose}>
+                                <FeedDetails orders={orders}/>
+                            </Modal>
+                        </Route>
+                    )}
+                    {background && (
+                        <ProtectedRoute path='/profile/orders/:id' exact={true}>
+                            <Modal
+                                headerText={`#${number}`}
+                                onClose={handleClose}>
+                                <FeedDetails orders={orders} />
+                            </Modal>
+                        </ProtectedRoute>
+                    )}
+
                     {background && <Route path="/ingredients/:id" children={
                         <Modal onClose={handleClose} headerText={'Детали ингредиента'}>
                             <IngredientDetails/>

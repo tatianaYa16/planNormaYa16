@@ -1,6 +1,6 @@
 import React, {useMemo, useState} from 'react';
 import styles from "./burger-constructor.module.css";
-import {ConstructorElement} from "@ya.praktikum/react-developer-burger-ui-components";
+import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 // @ts-ignore
 import {v4 as uuidv4} from 'uuid';
@@ -84,33 +84,43 @@ export default function BurgerConstructor() {
         <section className={styles.constructorMain}>
             <div className={`${styles.buns} pl-10`} ref={dropBun}>
                 {bun ? (
-                        <ConstructorElement
-                            type='top'
-                            isLocked={true}
-                            text={bun.name + ' (верх)'}
-                            price={bun.price}
-                            thumbnail={bun.image}
-                        />)
+                        <section className={styles.buns_padding}>
+                            <ConstructorElement
+                                type='top'
+                                isLocked={true}
+                                text={bun.name + ' (верх)'}
+                                price={bun.price}
+                                thumbnail={bun.image}
+                            />
+                        </section>
+                    )
                     : ""}
                 <div ref={dropIngredients}
                      className={`${styles.ingredients}`}>
                     {ingredients.map((ingredient: ITypeIngredient, index: number) => (
-                        <IngredientItem key={ingredient.uuid} index={index} data={ingredient}/>
+                        <section>
+                            <DragIcon type="primary"/>
+                            <IngredientItem key={ingredient.uuid} index={index} data={ingredient}/>
+                        </section>
                     ))}
                 </div>
-                {bun ? (<ConstructorElement
-                    type='bottom'
-                    isLocked={true}
-                    text={bun.name + ' (низ)'}
-                    price={bun.price}
-                    thumbnail={bun.image}
-                />) : (<div/>)}
+                {bun ? (
+                    <section className={styles.buns_padding}>
+                        <ConstructorElement
+                            type='bottom'
+                            isLocked={true}
+                            text={bun.name + ' (низ)'}
+                            price={bun.price}
+                            thumbnail={bun.image}
+                        />
+                    </section>
+                ) : (<div/>)}
 
 
             </div>
             <div className={styles.order}>
                 <p className={styles.orderCost}>
-                    {totalPrice?totalPrice:0}
+                    {totalPrice ? totalPrice : 0}
                 </p>
                 <CurrencyIcon type="primary"/>
                 <Button type="primary" size="large" onClick={handleOpenModal}>

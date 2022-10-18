@@ -68,7 +68,7 @@ const IngredientItem: FC<TCard<ITypeIngredient>> = (props) => {
 
     return (
         <span style={{opacity: opacity}} ref={itemRef}>
-            <DragIcon type="primary"/>
+
             <ConstructorElement
                 text={name}
                 price={price}

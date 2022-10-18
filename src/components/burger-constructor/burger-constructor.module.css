@@ -6,16 +6,19 @@
 
 
     width: 600px;
-    height: 400px;
+    height: 460px;
     left: 16px;
     top: 100px;
-    padding: 20px;
-    margin-left: 20px;
+    padding-top: 20px;
     overflow: auto;
 }
 
 .buns {
-    width: 530px;
+    width: 550px;
+}
+
+.buns_padding {
+    padding-left: 30px;
 }
 
 .bun_empty {
@@ -33,6 +36,7 @@
     flex-direction: column;
     align-items: center;
     padding-top: 100px;
+    padding-left: 50px;
     padding-bottom: 40px;
 }
 

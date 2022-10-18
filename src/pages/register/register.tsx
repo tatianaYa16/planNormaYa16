@@ -29,13 +29,12 @@ const RegisterPage = () => {
         email: ""
     })
 
-    const {values, handleChange, setValues} = useForm({});
-    // const handleChange = (e:ChangeEvent<HTMLInputElement>) => {
-    //     setFormData({
-    //         ...formData,
-    //         [e.target.name]: e.target.value
-    //     })
-    // }
+    const handleChange = (e:ChangeEvent<HTMLInputElement>) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        })
+    }
 
     const handleFormSubmit = (e:FormEvent) => {
        e.preventDefault();
