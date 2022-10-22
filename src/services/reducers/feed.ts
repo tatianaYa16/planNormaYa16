@@ -2,17 +2,6 @@ import {TOrder} from "../types/types";
 import {createReducer} from "@reduxjs/toolkit";
 import {wsClose, wsConnecting, wsError, wsMessage} from "../actions/feed";
 
-
-// import {
-//     WS_CONNECTION_SUCCESS,
-//     WS_CONNECTION_ERROR,
-//     WS_CONNECTION_CLOSED,
-//     WS_ORDER_GET,
-//     TFeedActions
-// } from '../actions/feed';
-// import { TFeedState } from '../types/types';
-//
-
 export type TFeedState = {
     wsConnected: boolean;
     orders: Array<TOrder>;

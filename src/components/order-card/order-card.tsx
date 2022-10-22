@@ -34,7 +34,7 @@ const OrderCardIngredients: FC<IOrderCardIngredients> = ({idIngredients}) => {
             : totalPrice += orderIngredient!.price * count;
 
         return (
-            <div className={styles.ingredient} style={{zIndex: 100 - index}} key={index}>
+            <div className={styles.ingredient}  key={index}>
                 <div className={styles.ingredient_preview}>
                     <img
                         src={orderIngredient.image}

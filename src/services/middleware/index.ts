@@ -1,5 +1,6 @@
 import {ActionCreatorWithoutPayload, ActionCreatorWithPayload, Middleware, MiddlewareAPI} from "@reduxjs/toolkit"
-import {AppDispatch, RootState} from "../types";
+import {RootState} from "../types";
+import {wsError, wsMessage, wsOpen} from "../actions/feed";
 
 export type TwsActionTypes = {
     wsInit: ActionCreatorWithPayload<string>,
@@ -11,7 +12,7 @@ export type TwsActionTypes = {
 }
 
 export const socketMiddleware = (wsActions: TwsActionTypes): Middleware<{}, RootState> => {
-    return (store) => {
+    return store=> {
         let socket: WebSocket | null = null
         let url = ''
         let isConnected = false
@@ -23,6 +24,7 @@ export const socketMiddleware = (wsActions: TwsActionTypes): Middleware<{}, Root
 
             if (wsInit.match(action)) {
                 url = action.payload
+                if (socket) { socket.close() }
                 socket = new WebSocket(url)
                 isConnected = true
                 clearTimeout(reconnectTimer)
@@ -30,24 +32,21 @@ export const socketMiddleware = (wsActions: TwsActionTypes): Middleware<{}, Root
             }
 
             if (socket) {
-                socket.onopen = (event) => {
-                    dispatch({type: onOpen, payload: event});
+                socket.onopen = () => {
+                    dispatch(wsOpen());
                 }
 
                 socket.onerror = (event) => {
-                    dispatch({type: onError, payload: event});
+                    dispatch(wsError(event.type));
                 }
 
                 socket.onmessage = (event) => {
                     const { data } = event
                     const parsedData = JSON.parse(data)
-                    dispatch({type: onMessage, payload: parsedData})
+                    dispatch(wsMessage(parsedData))
                 }
 
                 socket.onclose = event => {
-                    if (event.code !== 1000) {
-                        dispatch({type: onClose, payload: event});
-                    }
                     dispatch(onClose())
 
                     if (isConnected) {
