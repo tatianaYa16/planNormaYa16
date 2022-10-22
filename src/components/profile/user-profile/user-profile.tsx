@@ -1,9 +1,9 @@
-import React, {ChangeEvent, FormEvent, SyntheticEvent, useEffect, useState} from "react";
+import React, {FormEvent, SyntheticEvent, useEffect, useState} from "react";
 import style from "./user-profile.module.css";
 import {EmailInput, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {getUserInfo, postUserInfo} from "../../../services/actions/user";
 import {Button} from "../../../utils/components";
-import {NavLink, Redirect, Switch, Route, useRouteMatch} from 'react-router-dom';
+import { Switch, Route, useRouteMatch} from 'react-router-dom';
 import {OrderList} from "../../order-list/order-list";
 import {useDispatch, useSelector} from "../../../services/hooks";
 import {TUser} from "../../../services/api";

@@ -16,10 +16,6 @@ const ProfilePage = () => {
                     <Route path={`${match.path}/orders`} component={OrderList}/>
                     <Route path={`${match.path}`} component={UserProfile} exact/>
                 </Switch>
-
-                {/*<div className={`${style.profile_content}`}>*/}
-                {/*    <UserProfile/>*/}
-                {/*</div>*/}
             </div>
         </div>
     )

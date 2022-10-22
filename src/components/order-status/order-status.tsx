@@ -3,7 +3,7 @@ import { useSelector } from '../../services/hooks';
 import styles from './order-status.module.css';
 
 const OrderStatus: FC = () => {
-    const { total, totalToday, orders } = useSelector((store) => store.feed);
+    const { total, totalToday, orders } = useSelector((state) => state.feed);
 
     const pendingOrders = useMemo(() => orders?.filter((item) => item.status === 'pending').slice(0, 10), [orders]);
 

@@ -5,10 +5,10 @@ import {ProfileIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import {ListIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './app-header.module.css';
 import {NavLink, useRouteMatch} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {useSelector} from "../../services/hooks";
 
 export default function AppHeader() {
-    const {isAuth} = useSelector((state:any) => state.userReducer);
+    const {isAuth} = useSelector(state => state.userReducer);
     const isLogin = !!useRouteMatch('/login');
     const isForgetPassword = !!useRouteMatch('/forgot-password');
     const isResetPassword = !!useRouteMatch('/reset-password');

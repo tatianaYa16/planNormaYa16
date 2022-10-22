@@ -11,9 +11,11 @@ import {getCookie} from "../../utils/cookieUtils";
 
 export const OrderList: FC = () => {
     const dispatch = useDispatch();
-    const {orders} = useSelector((store) => store.feed);
+    const {orders} = useSelector((state) => state.feed);
     const isUserOrder = useRouteMatch({path: '/profile/orders/'});
-    const token = isUserOrder ? `?token=${getCookie('token')}` : '';
+    let accessToken  = getCookie('accessToken');
+    accessToken =accessToken?.slice(7, accessToken?.length);
+    const token = isUserOrder ? `?token=${accessToken}`: '';
 
     useEffect(() => {
         dispatch(
@@ -46,7 +48,7 @@ export const OrderList: FC = () => {
 
     return (
         <div className={styles.list + " custom-scroll mr-15 pr-4"}>
-            {(orders.length > 0) ? orders.map(dataToOrder) : null}
+            {orders && (orders.length > 0) ? orders.map(dataToOrder) : null}
         </div>
     );
 }

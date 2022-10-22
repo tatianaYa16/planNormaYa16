@@ -3,15 +3,15 @@ import style from './reset-password.module.css';
 import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, Redirect, useHistory} from "react-router-dom";
 import { postResetPassword} from "../../services/actions/user";
-import {useDispatch, useSelector} from "react-redux";
 import {getCookie} from "../../utils/cookieUtils";
 import {Button} from "../../utils/components";
+import {useDispatch, useSelector} from "../../services/hooks";
 
 const ResetPasswordPage = () => {
     const history = useHistory();
-    const dispatch:any = useDispatch();
+    const dispatch = useDispatch();
 
-    const {resetPasswordRequest, isAuth} = useSelector((state:any) => state.userReducer);
+    const {resetPasswordRequest, isAuth} = useSelector(state => state.userReducer);
 
     const [formData, setFormData] = useState({
         password: "",
