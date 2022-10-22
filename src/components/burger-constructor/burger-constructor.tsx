@@ -24,6 +24,8 @@ import {userReducer} from "../../services/reducers/user";
 import {useDispatch, useSelector} from '../../services/hooks';
 
 
+
+
 BurgerConstructor.propTypes = {
     items: PropTypes.array
 };
@@ -100,7 +102,7 @@ export default function BurgerConstructor() {
                 <div ref={dropIngredients}
                      className={`${styles.ingredients}`}>
                     {ingredients.map((ingredient: ITypeIngredient, index: number) => (
-                        <IngredientItem key={ingredient.uuid} index={index} data={ingredient}/>
+                            <IngredientItem key={ingredient.uuid} index={index} data={ingredient}/>
                     ))}
                 </div>
                 {bun ? (
@@ -129,7 +131,7 @@ export default function BurgerConstructor() {
 
             {modal &&
                 <Modal onClose={handleCloseModal}>
-                    <OrderDetails orderNumber={orderNumber ? orderNumber : 0}/>
+                    <OrderDetails orderNumber={orderNumber?orderNumber:0}/>
                 </Modal>
             }
         </section>

@@ -1,13 +1,11 @@
 import React from 'react';
 import style from "./menu-profile.module.css";
-import {NavLink, useHistory} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import {postLogout} from "../../../services/actions/user";
-import {AppDispatch} from "../../../services/types";
 import {useDispatch} from "../../../services/hooks";
 
 const MenuProfile = () => {
     const dispatch = useDispatch();
-    const history:any = useHistory();
     const handleClick = () => {
         dispatch(postLogout());
     }

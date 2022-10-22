@@ -24,10 +24,11 @@ import {FeedPage} from "../../pages/order-feed/order-feed";
 import {OrderPage} from "../../pages/order-page/order-page";
 import FeedDetails from "../feed-details/feed-details";
 import {useDispatch, useSelector} from "../../services/hooks";
+import {ILocation} from "../../utils/types";
 
 
 export default function App() {
-    const location: any = useLocation();
+    const location = useLocation<ILocation>();
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -40,16 +41,6 @@ export default function App() {
         }
     }, [dispatch, ingredients]);
 
-    // useEffect(() => {
-    //     let background = history.action === 'PUSH' && location.state && location.state.background;
-    //     if (location.state) {
-    //         if (location.state.hasOwnProperty('background')) {
-    //             background = location.state.background;
-    //         }
-    //     }
-    //     setBackground(background);
-    // }, [location.state, history.action]);
-
     const background = location.state?.background;
     const number = location.state && location.state.number;
     const orders = location.state && location.state.orders;
@@ -58,7 +49,6 @@ export default function App() {
         dispatch(ingredientModalClose());
         history.goBack();
     }
-
 
     return (
         <section>

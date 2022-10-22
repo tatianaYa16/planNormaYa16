@@ -4,7 +4,6 @@ import {getCookie} from "../../utils/cookieUtils";
 
 
 const ProtectedRoute:  FC<RouteProps & {children:ReactNode; path:string; exact:boolean}>= ({ children, exact, path }) => {
-   // const {isAuth} = useSelector((state:any) => state.userReducer);
     return (
         <Route
             exact={exact}

@@ -1,3 +1,6 @@
+import {TOrder} from "../services/types/types";
+import { Location } from "history";
+
 export interface ITypeIngredient {
     calories: number;
     carbohydrates: number;
@@ -15,8 +18,9 @@ export interface ITypeIngredient {
 
 export interface ILocation {
     from: Location;
-    background: boolean;
-    pathname: string;
+    background?: Location;
+    number?: number | string;
+    orders?: Array<TOrder>
 }
 
 export type TUser = {
