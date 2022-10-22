@@ -124,7 +124,7 @@ export const orderSuccess = (orderNumber: number): IOrderSuccess => {
     };
 }
 
-export const createOrder = async (ids: ReadonlyArray<Number>): Promise<TResponseBody<'order', any>> =>
+export const createOrder = async (ids: ReadonlyArray<String>): Promise<TResponseBody<'order', any>> =>
     await fetch(BASE_URL + 'orders', {
         method: 'POST',
         headers: {
@@ -138,7 +138,7 @@ export const createOrder = async (ids: ReadonlyArray<Number>): Promise<TResponse
         .then(data => data);
 
 
-export const postOrderThunk: AppThunk = (ids: ReadonlyArray<Number>) => (dispatch: AppDispatch) => {
+export const postOrderThunk = (ids: ReadonlyArray<String>):AppThunk => (dispatch: AppDispatch) => {
     dispatch(orderRequest());
     createOrder(ids).then(data => {
         if (data && data.success) {

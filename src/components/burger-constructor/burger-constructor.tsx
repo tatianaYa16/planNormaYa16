@@ -9,7 +9,6 @@ import PropTypes from 'prop-types';
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 
-import {useDispatch, useSelector} from "react-redux";
 import {useDrop} from "react-dnd";
 import {useHistory} from "react-router-dom";
 import {
@@ -22,6 +21,10 @@ import IngredientItem from "./ingredient-item/ingredient-item";
 import {ITypeIngredient} from "../../utils/types";
 import {Button} from "../../utils/components";
 import {userReducer} from "../../services/reducers/user";
+import {useDispatch, useSelector} from '../../services/hooks';
+
+
+
 
 BurgerConstructor.propTypes = {
     items: PropTypes.array
@@ -29,7 +32,7 @@ BurgerConstructor.propTypes = {
 
 export default function BurgerConstructor() {
     const {isAuth, ingredients, bun, modal, orderNumber} = useSelector(
-        (state: any) => ({
+        (state) => ({
             ingredients: state.burgerConstructor.ingredients,
             bun: state.burgerConstructor.bun,
             orderNumber: state.burgerConstructor.orderNumber,
@@ -37,7 +40,7 @@ export default function BurgerConstructor() {
             isAuth: state.userReducer.isAuth
         }));
 
-    const dispatch: any = useDispatch();
+    const dispatch = useDispatch();
     const history = useHistory();
 
     const [{isHover}, dropIngredients] = useDrop({
@@ -61,10 +64,11 @@ export default function BurgerConstructor() {
     });
 
     const totalPrice = useMemo(() => {
-        let price = ingredients.reduce((sum: number, item: ITypeIngredient) => {
+        let price = ingredients.reduce((sum, item) => {
             return item.price + sum;
         }, 0);
-        price += bun && bun.price * 2;
+        if (bun)
+            price += bun && bun.price * 2;
         return price;
     }, [ingredients, bun])
 
@@ -76,7 +80,7 @@ export default function BurgerConstructor() {
         if (!bun) return alert('Добавте сначала булочку.');
         console.log(isAuth);
         if (!isAuth) return history.push('/login');
-        const ids = [...ingredients.map((item: ITypeIngredient) => item._id), bun._id, bun._id];
+        const ids = [...ingredients.map(item => item._id), bun._id, bun._id];
         dispatch(postOrderThunk(ids));
     }
 
@@ -130,7 +134,7 @@ export default function BurgerConstructor() {
 
             {modal &&
                 <Modal onClose={handleCloseModal}>
-                    <OrderDetails orderNumber={orderNumber}/>
+                    <OrderDetails orderNumber={orderNumber?orderNumber:0}/>
                 </Modal>
             }
         </section>

@@ -4,7 +4,6 @@ import {rootReducer} from "./reducers";
 import {socketMiddleware} from "./middleware";
 import {WS_URL} from "../utils/configs";
 import {ActionCreatorWithoutPayload, ActionCreatorWithPayload, configureStore, createAction} from "@reduxjs/toolkit";
-import {TOrders} from "./types/types";
 
 import {
     wsInit as FeedWsInit,
@@ -39,5 +38,4 @@ export const store = configureStore({
     }
 })
 
-export type RootState = ReturnType<typeof rootReducer>;
 export const container = document.getElementById('root');

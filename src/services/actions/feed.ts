@@ -1,11 +1,12 @@
 import {TOrders} from "../types/types";
 import { createAction } from "@reduxjs/toolkit"
 
-/*export const WS_CONNECTION_START: "WS_CONNECTION_START" = "WS_CONNECTION_START";
+export const WS_CONNECTION_START: "WS_CONNECTION_START" = "WS_CONNECTION_START";
 export const WS_CONNECTION_SUCCESS: 'WS_CONNECTION_SUCCESS' = 'WS_CONNECTION_SUCCESS';
 export const WS_CONNECTION_ERROR: 'WS_CONNECTION_ERROR' = 'WS_CONNECTION_ERROR';
 export const WS_CONNECTION_CLOSED: 'WS_CONNECTION_CLOSED' = 'WS_CONNECTION_CLOSED';
-export const WS_ORDER_GET: 'WS_ORDER_GET' = 'WS_ORDER_GET';*/
+export const WS_ORDER_GET: 'WS_ORDER_GET' = 'WS_ORDER_GET';
+export const WS_CONNECTION_OPEN: 'WS_CONNECTION_OPEN' = 'WS_CONNECTION_OPEN';
 
 
 export const wsInit = createAction<string, 'WS_CONNECTION_START'>('WS_CONNECTION_START');
@@ -75,18 +76,20 @@ export type TFeedActions =
 //     payload
 // });
 //
-// export type TWSOrderActions = {
-//     wsInit: typeof WS_CONNECTION_START;
-//     onOpen: typeof WS_CONNECTION_SUCCESS;
-//     onError: typeof WS_CONNECTION_ERROR;
-//     onClose: typeof WS_CONNECTION_CLOSED;
-//     onOrders: typeof WS_ORDER_GET;
-// };
-//
-// export const wsOrderActions: TWSOrderActions = {
-//     wsInit: WS_CONNECTION_START,
-//     onOpen: WS_CONNECTION_SUCCESS,
-//     onError: WS_CONNECTION_ERROR,
-//     onClose: WS_CONNECTION_CLOSED,
-//     onOrders: WS_ORDER_GET,
-// };
+export type TWSOrderActions = {
+    wsInit: typeof WS_CONNECTION_START;
+    onOpen: typeof WS_CONNECTION_OPEN;
+    onError: typeof WS_CONNECTION_ERROR;
+    onClose: typeof WS_CONNECTION_CLOSED;
+    onMessage: typeof WS_ORDER_GET;
+    wsConnecting: typeof WS_CONNECTION_START;
+};
+
+export const wsOrderActions: TWSOrderActions = {
+    wsInit: WS_CONNECTION_START,
+    onOpen: WS_CONNECTION_OPEN,
+    wsConnecting: WS_CONNECTION_START,
+    onError: WS_CONNECTION_ERROR,
+    onClose: WS_CONNECTION_CLOSED,
+    onMessage: WS_ORDER_GET,
+};

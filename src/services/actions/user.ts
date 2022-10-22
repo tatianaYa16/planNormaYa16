@@ -236,7 +236,7 @@ export const postUserFailed = (): IPostUserFailed => {
     return {type: POST_USER_FAILED};
 }
 
-export const postForgotPassword: AppThunk = (email: string) => {
+export const postForgotPassword = (email: string):AppThunk => {
     return function (dispatch: AppDispatch) {
         const forgotPassword = async (email: string) => {
             await fetch(BASE_URL + 'password-reset',
@@ -262,7 +262,7 @@ export const postForgotPassword: AppThunk = (email: string) => {
     }
 }
 
-export const postResetPassword: AppThunk = (password: string, token: string) => {
+export const postResetPassword = (password: string, token: string):AppThunk => {
     return function (dispatch: AppDispatch) {
         dispatch(resetPasswordRequest())
         const resetPassword = async (password: string, token: string) => {
@@ -290,7 +290,7 @@ export const postResetPassword: AppThunk = (password: string, token: string) => 
 }
 
 
-export const postRegisterUser: AppThunk = (password: string, name: string, email: string) => {
+export const postRegisterUser = (password: string, name: string, email: string):AppThunk => {
     return function (dispatch: AppDispatch) {
         dispatch(registerUserRequest())
         const registerUser = async (password: string, name: string, email: string) => {
@@ -352,7 +352,7 @@ export const postLoginUser = (password: string, email: string) => {
     }
 }
 
-export const postLogout: AppThunk = () => {
+export const postLogout = ():AppThunk => {
     return function (dispatch: AppDispatch) {
         dispatch(logoutUserRequest());
         const loginUser = async () => {
@@ -388,7 +388,7 @@ export const postLogout: AppThunk = () => {
     }
 }
 
-export const getUserInfo: AppThunk = () => {
+export const getUserInfo = ():AppThunk => {
     return function (dispatch) {
         dispatch(getUserRequest())
         const userInfo = async () => {
@@ -444,7 +444,7 @@ export const refreshTokenRequest = ():Promise<Token>  => {
 }
 
 
-export const postUserInfo: AppThunk = (formData: TUser) => {
+export const postUserInfo = (formData: TUser):AppThunk => {
     return async function (dispatch: AppDispatch) {
         dispatch(postUserRequest());
         const patchUser = async (formData: TUser) => {

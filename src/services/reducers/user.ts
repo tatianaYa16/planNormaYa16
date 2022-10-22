@@ -32,7 +32,7 @@ export type TUserState = {
     resetPasswordRequest: boolean,
     registerUserRequest: boolean,
     isAuth: boolean,
-    user?: TUser,
+    user: TUser,
     getUserSuccess: boolean,
     getUserRequest: boolean,
     getUserFailed: boolean,
@@ -47,7 +47,7 @@ const initialState:TUserState = {
     resetPasswordRequest: false,
     registerUserRequest: false,
     isAuth: false,
-    user: undefined,
+    user: <TUser>{},
     getUserSuccess: false,
     getUserRequest: false,
     getUserFailed: false,
@@ -109,7 +109,7 @@ export const userReducer = (state = initialState, action:TUserActions):TUserStat
             return {
                 ...state,
                 isAuth: false,
-                user: undefined
+               // user: undefined
             }
         }
         case LOGOUT_USER_SUCCESS: {
@@ -117,7 +117,7 @@ export const userReducer = (state = initialState, action:TUserActions):TUserStat
             localStorage.removeItem('refreshToken');
             return {
                 ...state,
-                user: undefined,
+               // user: undefined,
                 isAuth: false
             }
         }

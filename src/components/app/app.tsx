@@ -9,7 +9,6 @@ import ResetPasswordPage from "../../pages/reset-password/reset-password";
 import ProtectedRoute from "../protected-route/protected-route";
 import Profile from "../../pages/profile/profile";
 import Modal from "../modal/modal";
-import {useDispatch, useSelector} from "react-redux";
 import {
     Switch,
     Route,
@@ -24,14 +23,15 @@ import IngredientDetails from "../ingredient-details/ingredient-details";
 import {FeedPage} from "../../pages/order-feed/order-feed";
 import {OrderPage} from "../../pages/order-page/order-page";
 import FeedDetails from "../feed-details/feed-details";
+import {useDispatch, useSelector} from "../../services/hooks";
 
 
 export default function App() {
     const location: any = useLocation();
-    const dispatch: any = useDispatch();
+    const dispatch = useDispatch();
     const history = useHistory();
 
-    const {ingredients} = useSelector((state: any) => state.burgerIngredients);
+    const {ingredients} = useSelector((state) => state.burgerIngredients);
     // const [background, setBackground] = useState(false);
 
     useEffect(() => {

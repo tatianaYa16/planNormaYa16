@@ -64,7 +64,7 @@ export const ingredientsSuccess = (ingredients: ReadonlyArray<ITypeIngredient>):
 }
 
 
-export const getIngredientsThunk: AppThunk = () => (dispatch: AppDispatch) => {
+export const getIngredientsThunk = ():AppThunk => (dispatch: AppDispatch) => {
     dispatch(ingredientsRequest())
     getIngredients().then(data => {
         if (data && data.success) {

@@ -1,15 +1,16 @@
 import React, {ChangeEvent, FormEvent, SyntheticEvent, useEffect, useState} from "react";
 import style from "./user-profile.module.css";
 import {EmailInput, Input} from "@ya.praktikum/react-developer-burger-ui-components";
-import {useDispatch, useSelector} from "react-redux";
 import {getUserInfo, postUserInfo} from "../../../services/actions/user";
 import {Button} from "../../../utils/components";
 import {NavLink, Redirect, Switch, Route, useRouteMatch} from 'react-router-dom';
 import {OrderList} from "../../order-list/order-list";
+import {useDispatch, useSelector} from "../../../services/hooks";
+import {TUser} from "../../../services/api";
 
 const UserProfile = () => {
-    const {user, getUserSuccess} = useSelector((state: any) => state.userReducer);
-    const dispatch: any = useDispatch();
+    const {user, getUserSuccess} = useSelector(state => state.userReducer);
+    const dispatch = useDispatch();
 
     const [formData, setFormData] = useState({
         name: "",
@@ -43,7 +44,8 @@ const UserProfile = () => {
     }
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
-        dispatch(postUserInfo(formData));
+        if(formData)
+        dispatch(postUserInfo(formData as TUser));
         setChangedInput(false);
     }
 
