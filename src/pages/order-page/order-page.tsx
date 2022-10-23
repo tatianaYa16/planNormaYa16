@@ -12,18 +12,16 @@ export const OrderPage: FC = () => {
     const {orders} = useSelector((store) => store.feed);
     const dispatch = useDispatch();
     const isUserOrder = useRouteMatch({path: '/profile/orders/'});
-    const token = isUserOrder ? `?token=${getCookie('token')}` : '';
+    let accessToken  = getCookie('accessToken');
+    accessToken =accessToken?.slice(7, accessToken?.length);
+    const token = isUserOrder ? `?token=${accessToken}` : '';
 
     useEffect(() => {
         console.log('OrderPage');
-        // dispatch(
-        //     isUserOrder
-        //         ? wsInit(WS_URL + token)
-        //         : wsInit(WS_URL_ALL)
-        // );
         dispatch(
-
-                 wsInit(WS_URL_ALL)
+            isUserOrder
+                ? wsInit(WS_URL + token)
+                : wsInit(WS_URL_ALL)
         );
 
         return () => {

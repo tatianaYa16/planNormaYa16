@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useMemo} from 'react';
 import styles from './app.module.css';
-import AppHeader from "../app_header/app-header";
+import AppHeader from "../app-header/app-header";
 import LoginPage from "../../pages/login/login";
 import HomePage from "../../pages/home/home";
 import RegisterPage from "../../pages/register/register";
@@ -74,6 +74,9 @@ export default function App() {
                         <Route path='/feed' exact={true}>
                             <FeedPage/>
                         </Route>
+                        <ProtectedRoute path={`/profile/orders/:id`} exact={true}>
+                            <OrderPage />
+                        </ProtectedRoute>
                         <Route path='/feed/:id' exact={true} children={<OrderPage/>}/>
                         <Route path='/ingredients/:id' exact={true} children={<IngredientDetails/>}/>
                         <ProtectedRoute path="/profile" exact={false}>

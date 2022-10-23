@@ -2,13 +2,12 @@ import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import {FC} from 'react';
 import {Link, useLocation} from 'react-router-dom';
 
-import styles from '../order-card/order-card.module.css';
+import styles from './order-card.module.css';
 import {IOrderCard, IOrderCardIngredients} from "../../services/types/types";
 import {useSelector} from "../../services/hooks";
 import {ITypeIngredient} from "../../utils/types";
 import {getOrderData} from "../../utils/common";
 
-// @ts-ignore
 const OrderCardPrice: FC<{ children: number }> = ({children}) => {
     return (
         <div className={`${styles.price}`}>

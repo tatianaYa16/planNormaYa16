@@ -5,6 +5,8 @@
     background: #1c1c21;
     border-radius: 40px;
     margin-bottom: 16px;
+    color: darkgrey;
+    text-decoration-line: underline;
 }
 
 .info {
@@ -14,6 +16,7 @@
     justify-content: space-between;
     width: 85%;
     padding: 24px;
+    color: white;
 }
 
 .ingredients {
@@ -21,8 +24,6 @@
     max-width: 436px;
     flex-wrap: wrap;
 }
-
-
 
 .ingredient_preview {
     position: relative;

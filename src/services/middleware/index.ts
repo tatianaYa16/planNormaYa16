@@ -1,6 +1,5 @@
 import {ActionCreatorWithoutPayload, ActionCreatorWithPayload, Middleware, MiddlewareAPI} from "@reduxjs/toolkit"
 import {RootState} from "../types";
-import {wsError, wsMessage, wsOpen} from "../actions/feed";
 
 export type TwsActionTypes = {
     wsInit: ActionCreatorWithPayload<string>,
@@ -33,17 +32,17 @@ export const socketMiddleware = (wsActions: TwsActionTypes): Middleware<{}, Root
 
             if (socket) {
                 socket.onopen = () => {
-                    dispatch(wsOpen());
+                    dispatch(onOpen());
                 }
 
                 socket.onerror = (event) => {
-                    dispatch(wsError(event.type));
+                    dispatch(onError(event.type));
                 }
 
                 socket.onmessage = (event) => {
                     const { data } = event
                     const parsedData = JSON.parse(data)
-                    dispatch(wsMessage(parsedData))
+                    dispatch(onMessage(parsedData))
                 }
 
                 socket.onclose = event => {

@@ -24,7 +24,7 @@ export default function AppHeader() {
         if (isResetPassword) {
             return '/reset-password';
         }
-        if(isRegister){
+        if (isRegister) {
             return '/register';
         }
 
@@ -47,7 +47,9 @@ export default function AppHeader() {
                     <span className="text text_type_main-default ml-2">Лента заказов</span>
                 </NavLink>
             </div>
-            <Logo/>
+            <NavLink to={"/"}>
+                <Logo/>
+            </NavLink>
 
             <NavLink exact={true} to={{pathname: path}}
                      activeClassName={styles.header_link_active}

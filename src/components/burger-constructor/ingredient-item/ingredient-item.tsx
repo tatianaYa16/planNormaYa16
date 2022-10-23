@@ -1,5 +1,4 @@
 import React, {FC, useRef} from 'react';
-import {useDispatch} from "react-redux";
 import {useDrag, useDrop, XYCoord} from "react-dnd";
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {
@@ -7,6 +6,7 @@ import {
     constructorRemoveIngredient
 } from '../../../services/actions/burger-constructor';
 import {ITypeIngredient} from "../../../utils/types";
+import {useDispatch} from "../../../services/hooks";
 
 type TCard<T> = {
     data: T;
