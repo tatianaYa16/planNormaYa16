@@ -1,5 +1,5 @@
 import {BASE_URL} from '../../utils/configs';
-import {checkResponse} from  '../../utils/response-utils';
+import {checkResponse} from '../../utils/response-utils';
 
 export const INGREDIENTS_REQUEST = 'INGREDIENTS_REQUEST';
 export const INGREDIENTS_SUCCESS = 'INGREDIENTS_SUCCESS';

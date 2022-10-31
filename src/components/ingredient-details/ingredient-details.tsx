@@ -1,21 +1,22 @@
 import React, {useMemo} from 'react';
 import styles from "./ingredient-details.module.css";
 import {useSelector} from "react-redux";
+import {ITypeIngredient} from "../../utils/types";
 
-export default function IngredientDetails(props) {
-    const getLastParam = (url) => {
-        let parms = url.split("/");
+export default function IngredientDetails() {
+    const getLastParam = (url:string) => {
+        let parms:string[] = url.split("/");
         return parms[parms.length-1];
     }
 
     const idSelectedIngredient = getLastParam(window.location.pathname);
-    const {ingredients} = useSelector(state => state.burgerIngredients);
+    const {ingredients} = useSelector((state:any) => state.burgerIngredients);
     console.log("ingredients");
     console.log("ingredients");
     console.log("idSelectedIngredient " +idSelectedIngredient);
 
     let ingredient = useMemo(() => {
-        let temp = ingredients.find((item) => item._id === idSelectedIngredient);
+        let temp:ITypeIngredient = ingredients.find((item:ITypeIngredient) => item._id === idSelectedIngredient);
         if (temp != undefined){
             return temp;
         }

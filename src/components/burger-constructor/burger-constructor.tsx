@@ -1,8 +1,8 @@
 import React, {useMemo, useState} from 'react';
 import styles from "./burger-constructor.module.css";
 import {ConstructorElement} from "@ya.praktikum/react-developer-burger-ui-components";
-import {Button} from '@ya.praktikum/react-developer-burger-ui-components';
 import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
+// @ts-ignore
 import {v4 as uuidv4} from 'uuid';
 
 import PropTypes from 'prop-types';
@@ -19,20 +19,25 @@ import {
     postOrderToServer
 } from '../../services/actions/burger-constructor'
 import IngredientItem from "./ingredient-item/ingredient-item";
+import {ITypeIngredient} from "../../utils/types";
+import {Button} from "../../utils/components";
+import {userReducer} from "../../services/reducers/user";
 
 BurgerConstructor.propTypes = {
     items: PropTypes.array
 };
 
-export default function BurgerConstructor(props) {
-    const {isAuth, ingredients, bun, modal, orderNumber} = useSelector(state => ({
-        ingredients: state.burgerConstructor.ingredients,
-        bun: state.burgerConstructor.bun,
-        orderNumber: state.burgerConstructor.orderNumber,
-        modal: state.burgerConstructor.modal
-    }));
+export default function BurgerConstructor() {
+    const {isAuth, ingredients, bun, modal, orderNumber} = useSelector(
+        (state: any) => ({
+            ingredients: state.burgerConstructor.ingredients,
+            bun: state.burgerConstructor.bun,
+            orderNumber: state.burgerConstructor.orderNumber,
+            modal: state.burgerConstructor.modal,
+            isAuth: state.userReducer.isAuth
+        }));
 
-    const dispatch = useDispatch();
+    const dispatch:any = useDispatch();
     const history = useHistory();
 
     const [{isHover}, dropIngredients] = useDrop({
@@ -40,7 +45,7 @@ export default function BurgerConstructor(props) {
         collect: monitor => ({
             isHover: monitor.isOver()
         }),
-        drop(item) {
+        drop:(item: ITypeIngredient)=>{
             dispatch({
                 type: CONSTRUCTOR_ADD_INGREDIENT,
                 item: {...item, uuid: uuidv4()}
@@ -62,7 +67,7 @@ export default function BurgerConstructor(props) {
     });
 
     const totalPrice = useMemo(() => {
-        let price = ingredients.reduce((sum, item) => {
+        let price = ingredients.reduce((sum:number, item:ITypeIngredient) => {
             return item.price + sum;
         }, 0);
         price += bun && bun.price * 2;
@@ -75,8 +80,9 @@ export default function BurgerConstructor(props) {
 
     const handleOpenModal = () => {
         if (!bun) return alert('Добавте сначала булочку.');
-        if (!isAuth) history.push('/login');
-        const ids = [...ingredients.map(item => item._id), bun._id, bun._id];
+        console.log(isAuth);
+        if (!isAuth)  return history.push('/login');
+        const ids = [...ingredients.map((item:ITypeIngredient) => item._id), bun._id, bun._id];
         dispatch(postOrderToServer(ids));
     }
 
@@ -93,9 +99,8 @@ export default function BurgerConstructor(props) {
                         />)
                     : ""}
                 <div ref={dropIngredients}
-                     className={`${styles.ingredients}`}
-                >
-                    {ingredients.map((ingredient, index) => (
+                     className={`${styles.ingredients}`}>
+                    {ingredients.map((ingredient:ITypeIngredient, index:number) => (
                         <IngredientItem key={ingredient.uuid} index={index} data={ingredient}/>
                     ))}
                 </div>
@@ -120,7 +125,7 @@ export default function BurgerConstructor(props) {
             </div>
 
             {modal &&
-                <Modal onClose={handleCloseModal} >
+                <Modal onClose={handleCloseModal}>
                     <OrderDetails orderNumber={orderNumber}/>
                 </Modal>
             }

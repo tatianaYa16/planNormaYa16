@@ -1,36 +1,39 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, FormEvent, ChangeEvent} from "react";
 import style from "./login.module.css";
-import {Link, Redirect, useHistory} from "react-router-dom";
-import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Link, Redirect, useHistory, useLocation} from "react-router-dom";
+import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useDispatch, useSelector} from "react-redux";
 import {postLoginUser} from "../../services/actions/user";
-import {getCookie} from "../../utils/cookieUtils";
+import {PasswordInput, Button} from "../../utils/components";
+import {ILocation} from "../../utils/types";
 
 const LoginPage = () => {
-    const dispatch = useDispatch();
+    const dispatch: any = useDispatch();
     const history = useHistory();
+    const location = useLocation<ILocation>();
 
-    const {isAuth} = useSelector(state => state.userReducer);
+    const {isAuth} = useSelector((state: any) => state.userReducer);
 
     const [formData, setFormData] = useState({
         password: "",
         email: ""
     })
 
-    const handleChange = (e) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
         })
     }
 
-    const handleFormSubmit = (e) => {
+    const handleFormSubmit = (e: FormEvent) => {
         e.preventDefault();
         dispatch(postLoginUser(formData.password, formData.email));
     }
 
     if (isAuth) {
-        return (<Redirect to={{pathname: '/'}}/>)
+        const path = location?.state?.from.pathname || '/'
+        return (<Redirect to={{pathname: path}}/>)
     }
     return (
         <div className={style.container}>

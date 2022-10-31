@@ -5,9 +5,10 @@ import {useDispatch} from "react-redux";
 import {postLogout} from "../../../services/actions/user";
 
 const MenuProfile = () => {
-    const dispatch = useDispatch();
-    const history = useHistory();
+    const dispatch:any = useDispatch();
+    const history:any = useHistory();
     const handleClick = () => {
+        // @ts-ignore
         dispatch(postLogout(history));
     }
     return (

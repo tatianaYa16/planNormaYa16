@@ -8,7 +8,7 @@ import {NavLink, useRouteMatch} from "react-router-dom";
 import {useSelector} from "react-redux";
 
 export default function AppHeader() {
-    const {isAuth} = useSelector(state => state.userReducer);
+    const {isAuth} = useSelector((state:any) => state.userReducer);
     const isLogin = !!useRouteMatch('/login');
     const isForgetPassword = !!useRouteMatch('/forgot-password');
     const isResetPassword = !!useRouteMatch('/reset-password');

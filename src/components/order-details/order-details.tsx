@@ -1,10 +1,10 @@
 import React from 'react';
 import style from './order-details.module.css';
 import {CheckMarkIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import done from '../../images/done.png'
-import PropTypes from "prop-types";
+import done from '../../images/done.png';
+import {FunctionComponent} from "react";
 
-const OrderDetails = ({orderNumber}) => {
+const OrderDetails:FunctionComponent<{orderNumber:number}> = ({orderNumber}) => {
     return(
         <div className={style.order + ' pb-15 '}>
             <h3 className={style.header +' text text_primary_ligth text_type_digits-large '}>
@@ -20,9 +20,5 @@ const OrderDetails = ({orderNumber}) => {
         </div>
     )
 }
-
-OrderDetails.propTypes = {
-    orderNumber: PropTypes.number.isRequired
-};
 
 export default  OrderDetails;
