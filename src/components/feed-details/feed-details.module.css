@@ -1,0 +1,66 @@
+.container {
+    width: 640px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.ingredients {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-height: 320px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.ingredient {
+    display: flex;
+    align-items: center;
+    width: 608px;
+}
+
+.ingredient_preview {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 64px;
+    height: 64px;
+    border: solid 2px transparent;
+    border-radius: 50%;
+    background: #131316;
+    background-clip: padding-box;
+}
+
+.ingredient_preview::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    margin: -2px;
+    border-radius: 50%;
+    background: linear-gradient(to right, #801ab2, #4c4cff);
+}
+
+.ingredients img {
+    height: 56px;
+}
+
+.desc {
+    width: 320px;
+}
+
+.price {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+.time_price {
+    display: flex;
+    justify-content: space-between;
+    margin: 40px 0;
+}

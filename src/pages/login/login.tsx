@@ -1,18 +1,17 @@
-import React, {useState, useEffect, FormEvent, ChangeEvent} from "react";
+import React, {useState, FormEvent, ChangeEvent} from "react";
 import style from "./login.module.css";
-import {Link, Redirect, useHistory, useLocation} from "react-router-dom";
+import {Link, Redirect, useLocation} from "react-router-dom";
 import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
-import {useDispatch, useSelector} from "react-redux";
 import {postLoginUser} from "../../services/actions/user";
 import {PasswordInput, Button} from "../../utils/components";
 import {ILocation} from "../../utils/types";
+import {useDispatch, useSelector} from "../../services/hooks";
 
 const LoginPage = () => {
-    const dispatch: any = useDispatch();
-    const history = useHistory();
+    const dispatch = useDispatch();
     const location = useLocation<ILocation>();
 
-    const {isAuth} = useSelector((state: any) => state.userReducer);
+    const {isAuth} = useSelector(state => state.userReducer);
 
     const [formData, setFormData] = useState({
         password: "",

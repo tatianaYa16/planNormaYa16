@@ -1,20 +1,19 @@
 import styles from "./burger-ingredients.module.css";
 import {CurrencyIcon, Counter} from "@ya.praktikum/react-developer-burger-ui-components";
-import React from "react";
-import {useSelector} from "react-redux";
+import React, {FC} from "react";
 import {useDrag} from "react-dnd";
-import PropTypes from "prop-types";
 import {Link, useLocation} from "react-router-dom";
+import {useDispatch, useSelector} from "../../services/hooks";
+import {ITypeIngredient} from "../../utils/types";
+import {ingredientModalOpen} from "../../services/actions/burger-ingredients";
 
-Ingredient.propTypes = {
-    item: PropTypes.object.isRequired,
-    onClick: PropTypes.func.isRequired
-};
-
-export default function Ingredient(props) {
+interface IIngredient {
+   product:ITypeIngredient
+}
+export const Ingredient:FC<IIngredient> = ({product})=> {
     const location = useLocation();
     const {ingredients, bun} = useSelector(state => state.burgerConstructor);
-    const {image_large, price, name, _id, type} = props.item;
+    const {image_large, price, name, _id, type} = product
 
     let counter = ingredients.filter((ingredient) => ingredient._id === _id).length;
 
@@ -26,14 +25,19 @@ export default function Ingredient(props) {
 
     const [{opacity}, refIngredient] = useDrag({
         type: type === 'bun' ? 'buns' : 'ingredients',
-        item: props.item,
+        item: product,
         collect: monitor => ({
             opacity: monitor.isDragging() ? 0.5 : 1
         })
     })
 
+    const dispatch = useDispatch();
+
+    const handleOpenModal = () => {
+        dispatch(ingredientModalOpen());
+    }
     return (
-        <Link onClick={props.onClick}
+        <Link onClick={handleOpenModal}
               id={_id}
               className={styles.ingredientCard}
               style={{opacity: opacity}}

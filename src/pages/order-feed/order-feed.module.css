@@ -1,0 +1,39 @@
+.container {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    margin: 0 auto;
+    height: calc(100vh - 190px);
+    width: 1280px;
+}
+.main {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    max-width: 1280px;
+}
+
+
+.feed {
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    display: flex;
+    flex-grow: 1;
+}
+
+.orders {
+    width: calc(50% - 30px);
+    overflow: auto;
+    max-height: calc(100vh - 200px);
+}
+
+.stats {
+    width: calc(50% - 30px);
+}
+
+.state {
+    display: flex;
+}

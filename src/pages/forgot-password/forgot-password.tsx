@@ -2,18 +2,18 @@ import React, {ChangeEvent, FormEvent, useEffect, useState} from "react";
 import styles from "./forgot-password.module.css";
 import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, Redirect, useHistory} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
 import {postForgotPassword} from "../../services/actions/user";
 import {getCookie} from "../../utils/cookieUtils";
 import {Button} from "../../utils/components";
+import {useDispatch, useSelector} from "../../services/hooks";
 
 
 const ForgotPasswordPage = () => {
     const history = useHistory();
-    const dispatch: any = useDispatch();
+    const dispatch = useDispatch();
     const [email, setEmail] = useState<string>("");
 
-    const {forgotPasswordRequest, isAuth} = useSelector((state: any) => state.userReducer);
+    const {forgotPasswordRequest, isAuth} = useSelector(state => state.userReducer);
 
     useEffect(() => {
         if (forgotPasswordRequest)

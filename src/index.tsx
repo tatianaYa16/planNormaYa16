@@ -6,14 +6,10 @@ import reportWebVitals from './reportWebVitals';
 import {Provider} from "react-redux";
 import {DndProvider} from "react-dnd";
 import {HTML5Backend} from "react-dnd-html5-backend";
-import {applyMiddleware, createStore} from "redux";
-import thunk from "redux-thunk";
-import {rootReducer} from "./services/reducers";
-import {composeWithDevTools} from '@redux-devtools/extension';
 import {BrowserRouter} from "react-router-dom";
+import {store} from "./services/store";
 
-const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
-const container = document.getElementById('root');
+ const container = document.getElementById('root');
 const root = createRoot(container!);
 root.render(
     <BrowserRouter>

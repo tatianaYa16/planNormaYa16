@@ -5,10 +5,10 @@ import {ProfileIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import {ListIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './app-header.module.css';
 import {NavLink, useRouteMatch} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {useSelector} from "../../services/hooks";
 
 export default function AppHeader() {
-    const {isAuth} = useSelector((state:any) => state.userReducer);
+    const {isAuth} = useSelector(state => state.userReducer);
     const isLogin = !!useRouteMatch('/login');
     const isForgetPassword = !!useRouteMatch('/forgot-password');
     const isResetPassword = !!useRouteMatch('/reset-password');
@@ -24,7 +24,7 @@ export default function AppHeader() {
         if (isResetPassword) {
             return '/reset-password';
         }
-        if(isRegister){
+        if (isRegister) {
             return '/register';
         }
 
@@ -40,14 +40,16 @@ export default function AppHeader() {
                     <BurgerIcon type="primary"/>
                     <span className="text text_type_main-default ml-2">Конструктор</span>
                 </NavLink>
-                <NavLink to={"/profile/orders"}
+                <NavLink to={"/feed"}
                          activeClassName={styles.header_link_active}
                          className={styles.header_link + ' pr-5 '}>
                     <ListIcon type="secondary"/>
                     <span className="text text_type_main-default ml-2">Лента заказов</span>
                 </NavLink>
             </div>
-            <Logo/>
+            <NavLink to={"/"}>
+                <Logo/>
+            </NavLink>
 
             <NavLink exact={true} to={{pathname: path}}
                      activeClassName={styles.header_link_active}

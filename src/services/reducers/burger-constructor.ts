@@ -8,20 +8,31 @@ import {
     ORDER_REQUEST,
     ORDER_SUCCESS,
     ORDER_FAILED
+} from '../constants';
 
-} from '../actions/burger-constructor';
+import {TBurgerConstructorActions} from "../actions/burger-constructor";
+import {ITypeIngredient} from "../../utils/types";
 
-const initialState = {
-    orderNumber: null,
+export type TBurgerConstructor = {
+    orderNumber?: number;
+    ingredients: ReadonlyArray<ITypeIngredient>
+    bun?:ITypeIngredient
+    totalPrice: number;
+    modal: boolean;
+    orderRequest: boolean;
+    orderFailed: boolean;
+};
+const initialState:TBurgerConstructor = {
+    orderNumber: undefined,
     ingredients: [],
-    bun: null,
+    bun: undefined,
     totalPrice: 0,
     modal: false,
     orderRequest: false,
     orderFailed: false
 }
 
-export const burgerConstructorReducer = (state = initialState, action) => {
+export const burgerConstructorReducer = (state = initialState, action:TBurgerConstructorActions):TBurgerConstructor => {
     switch (action.type) {
         case CONSTRUCTOR_ADD_BUN: {
             return {
@@ -75,9 +86,9 @@ export const burgerConstructorReducer = (state = initialState, action) => {
         case MODAL_CLOSE: {
             return {
                 ...state,
-                order: null,
+                orderNumber: undefined,
                 ingredients: [],
-                bun: null,
+                bun: undefined,
                 modal: false
             }
         }

@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useMemo} from 'react';
 import styles from './app.module.css';
-import AppHeader from "../app_header/app-header";
+import AppHeader from "../app-header/app-header";
 import LoginPage from "../../pages/login/login";
 import HomePage from "../../pages/home/home";
 import RegisterPage from "../../pages/register/register";
@@ -9,7 +9,6 @@ import ResetPasswordPage from "../../pages/reset-password/reset-password";
 import ProtectedRoute from "../protected-route/protected-route";
 import Profile from "../../pages/profile/profile";
 import Modal from "../modal/modal";
-import {useDispatch, useSelector} from "react-redux";
 import {
     Switch,
     Route,
@@ -17,46 +16,39 @@ import {
     useLocation
 } from "react-router-dom";
 import {
-    getIngredientsFromServer,
-    INGREDIENT_MODAL_CLOSE
+    getIngredientsThunk,
+    ingredientModalClose
 } from "../../services/actions/burger-ingredients";
 import IngredientDetails from "../ingredient-details/ingredient-details";
+import {FeedPage} from "../../pages/order-feed/order-feed";
+import {OrderPage} from "../../pages/order-page/order-page";
+import FeedDetails from "../feed-details/feed-details";
+import {useDispatch, useSelector} from "../../services/hooks";
 import {ILocation} from "../../utils/types";
 
 
-
 export default function App() {
-    const location:any = useLocation();
-    const dispatch: any = useDispatch();
+    const location = useLocation<ILocation>();
+    const dispatch = useDispatch();
     const history = useHistory();
 
-    const {ingredients} = useSelector((state: any) => state.burgerIngredients);
-   // const [background, setBackground] = useState(false);
+    const {ingredients} = useSelector((state) => state.burgerIngredients);
+    // const [background, setBackground] = useState(false);
 
     useEffect(() => {
         if (ingredients.length <= 0) {
-            dispatch(getIngredientsFromServer());
+            dispatch(getIngredientsThunk());
         }
     }, [dispatch, ingredients]);
 
-    // useEffect(() => {
-    //     let background = history.action === 'PUSH' && location.state && location.state.background;
-    //     if (location.state) {
-    //         if (location.state.hasOwnProperty('background')) {
-    //             background = location.state.background;
-    //         }
-    //     }
-    //     setBackground(background);
-    // }, [location.state, history.action]);
-
     const background = location.state?.background;
+    const number = location.state && location.state.number;
+    const orders = location.state && location.state.orders;
 
     const handleClose = () => {
-        dispatch({type: INGREDIENT_MODAL_CLOSE});
-       // history.push("/");
+        dispatch(ingredientModalClose());
         history.goBack();
     }
-
 
     return (
         <section>
@@ -79,11 +71,37 @@ export default function App() {
                         <Route path="/reset-password" exact={true}>
                             <ResetPasswordPage/>
                         </Route>
-                        <Route path={"/ingredients/:id"} exact={true} children={<IngredientDetails/>}/>
-                        <ProtectedRoute path="/profile" exact={true}>
+                        <Route path='/feed' exact={true}>
+                            <FeedPage/>
+                        </Route>
+                        <ProtectedRoute path={`/profile/orders/:id`} exact={true}>
+                            <OrderPage />
+                        </ProtectedRoute>
+                        <Route path='/feed/:id' exact={true} children={<OrderPage/>}/>
+                        <Route path='/ingredients/:id' exact={true} children={<IngredientDetails/>}/>
+                        <ProtectedRoute path="/profile" exact={false}>
                             <Profile/>
                         </ProtectedRoute>
                     </Switch>
+                    {background && (
+                        <Route path='/feed/:id'>
+                            <Modal
+                                headerText={`#${number}`}
+                                onClose={handleClose}>
+                                <FeedDetails orders={orders}/>
+                            </Modal>
+                        </Route>
+                    )}
+                    {background && (
+                        <ProtectedRoute path='/profile/orders/:id' exact={true}>
+                            <Modal
+                                headerText={`#${number}`}
+                                onClose={handleClose}>
+                                <FeedDetails orders={orders} />
+                            </Modal>
+                        </ProtectedRoute>
+                    )}
+
                     {background && <Route path="/ingredients/:id" children={
                         <Modal onClose={handleClose} headerText={'Детали ингредиента'}>
                             <IngredientDetails/>

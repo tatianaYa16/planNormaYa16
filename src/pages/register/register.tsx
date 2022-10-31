@@ -2,17 +2,16 @@ import style from "./register.module.css";
 import {Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, Redirect, useHistory} from "react-router-dom";
 import {postRegisterUser} from "../../services/actions/user";
-import {useDispatch, useSelector} from "react-redux";
 import React, {ChangeEvent, FormEvent, useEffect, useState} from "react";
 import {getCookie} from "../../utils/cookieUtils";
 import {Button, PasswordInput} from "../../utils/components";
-import {useForm} from "../../hook/useForm";
+import {useDispatch, useSelector} from "../../services/hooks";
 
 
 const RegisterPage = () => {
     const history = useHistory();
-    const dispatch:any =  useDispatch();
-    const {isAuth, registerUserRequest} = useSelector((state:any) => state.userReducer);
+    const dispatch = useDispatch();
+    const {isAuth, registerUserRequest} = useSelector(state => state.userReducer);
 
     useEffect(() => {
         if (registerUserRequest)
@@ -29,16 +28,15 @@ const RegisterPage = () => {
         email: ""
     })
 
-    const {values, handleChange, setValues} = useForm({});
-    // const handleChange = (e:ChangeEvent<HTMLInputElement>) => {
-    //     setFormData({
-    //         ...formData,
-    //         [e.target.name]: e.target.value
-    //     })
-    // }
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        })
+    }
 
-    const handleFormSubmit = (e:FormEvent) => {
-       e.preventDefault();
+    const handleFormSubmit = (e: FormEvent) => {
+        e.preventDefault();
         dispatch(postRegisterUser(formData.password, formData.name, formData.email));
     }
 

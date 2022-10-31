@@ -1,0 +1,95 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background: #1c1c21;
+    border-radius: 40px;
+    margin-bottom: 16px;
+    color: darkgrey;
+    text-decoration-line: underline;
+}
+
+.info {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: space-between;
+    width: 85%;
+    padding: 24px;
+    color: white;
+}
+
+.ingredients {
+    display: flex;
+    max-width: 436px;
+    flex-wrap: wrap;
+}
+
+.ingredient_preview {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 64px;
+    height: 64px;
+    border: solid 2px transparent;
+    border-radius: 50%;
+    background: #131316;
+    background-clip: padding-box;
+}
+
+.ingredient {
+    position: relative;
+    width: 66px;
+    height: 66px;
+    margin-left: -16px;
+    padding-left: 16px;
+}
+
+.ingredient_preview::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    margin: -2px;
+    border-radius: 50%;
+    background: linear-gradient(to right, #801ab2, #4c4cff);
+}
+
+.ingredients img {
+    height: 56px;
+}
+
+.ingredient_count {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: #1C1C21;
+    opacity: 0.6;
+}
+
+.price {
+    display: flex;
+    align-items: center;
+}
+
+.overlay {
+    background: rgba(28, 28, 33, 0.6);
+    color: aliceblue;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 2px;
+    top: 2px;
+    z-index: 1;
+}
