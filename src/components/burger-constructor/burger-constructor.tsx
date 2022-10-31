@@ -86,7 +86,7 @@ export default function BurgerConstructor() {
 
     return (
         <section className={styles.constructorMain}>
-            <div className={`${styles.buns} pl-10`} ref={dropBun}>
+            <div className={`${styles.buns} pl-10`} ref={dropBun} data-test={'selected'}>
                 {bun ? (
                         <section className={styles.buns_padding}>
                             <ConstructorElement

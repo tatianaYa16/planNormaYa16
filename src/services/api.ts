@@ -26,10 +26,3 @@ export interface CustomResponse<T> extends CustomBody<T> {
     readonly url: string;
     clone(): Response;
 }
-
-export type TUser = {
-    readonly id: number;
-    readonly password: string;
-    readonly email: string;
-    readonly name: string;
-};

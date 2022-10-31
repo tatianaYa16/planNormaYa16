@@ -22,7 +22,7 @@ export type TBurgerConstructor = {
     orderRequest: boolean;
     orderFailed: boolean;
 };
-const initialState:TBurgerConstructor = {
+export const initialState:TBurgerConstructor = {
     orderNumber: undefined,
     ingredients: [],
     bun: undefined,

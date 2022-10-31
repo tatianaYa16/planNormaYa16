@@ -6,7 +6,8 @@ import {Button} from "../../../utils/components";
 import { Switch, Route, useRouteMatch} from 'react-router-dom';
 import {OrderList} from "../../order-list/order-list";
 import {useDispatch, useSelector} from "../../../services/hooks";
-import {TUser} from "../../../services/api";
+import {TUser} from "../../../utils/types";
+
 
 const UserProfile = () => {
     const {user, getUserSuccess} = useSelector(state => state.userReducer);

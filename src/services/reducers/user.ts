@@ -25,7 +25,7 @@ import {TUserActions} from "../actions/user";
 
 import {setCookie, deleteCookie} from "../../utils/cookieUtils";
 import {saveTokens} from "../../utils/response-utils";
-import {TUser} from "../api";
+import {TUser} from "../../utils/types";
 
 export type TUserState = {
     forgotPasswordRequest: boolean,
@@ -42,7 +42,7 @@ export type TUserState = {
     accessToken?: boolean,
     refreshToken?: boolean
 };
-const initialState:TUserState = {
+export const initialState:TUserState = {
     forgotPasswordRequest: false,
     resetPasswordRequest: false,
     registerUserRequest: false,
