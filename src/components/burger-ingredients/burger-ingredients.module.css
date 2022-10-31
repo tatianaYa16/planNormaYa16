@@ -43,3 +43,13 @@
     max-width: 270px;
 }
 
+.counter {
+    position: relative;
+}
+
+.caption {
+    text-align: center;
+    overflow-wrap: break-word;
+}
+
+
