@@ -11,6 +11,7 @@ import OrderDetails from "../order-details/order-details";
 
 import {useDispatch, useSelector} from "react-redux";
 import {useDrop} from "react-dnd";
+import {useHistory} from "react-router-dom";
 import {
     CONSTRUCTOR_ADD_INGREDIENT,
     CONSTRUCTOR_ADD_BUN,
@@ -24,7 +25,7 @@ BurgerConstructor.propTypes = {
 };
 
 export default function BurgerConstructor(props) {
-    const {ingredients, bun, modal, orderNumber} = useSelector(state => ({
+    const {isAuth, ingredients, bun, modal, orderNumber} = useSelector(state => ({
         ingredients: state.burgerConstructor.ingredients,
         bun: state.burgerConstructor.bun,
         orderNumber: state.burgerConstructor.orderNumber,
@@ -32,6 +33,7 @@ export default function BurgerConstructor(props) {
     }));
 
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const [{isHover}, dropIngredients] = useDrop({
         accept: 'ingredients',
@@ -73,6 +75,7 @@ export default function BurgerConstructor(props) {
 
     const handleOpenModal = () => {
         if (!bun) return alert('Добавте сначала булочку.');
+        if (!isAuth) history.push('/login');
         const ids = [...ingredients.map(item => item._id), bun._id, bun._id];
         dispatch(postOrderToServer(ids));
     }

@@ -1,0 +1,15 @@
+.container {
+    composes: container from  "../../css/main.css";
+}
+
+.login_container {
+    composes: login_container from  "../../css/pages.css";
+}
+
+.form_button {
+    composes: form_button from  "../../css/pages.css";
+}
+
+.login_links {
+    composes: login_links from  "../../css/pages.css";
+}
