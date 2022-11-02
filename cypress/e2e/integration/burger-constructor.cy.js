@@ -1,6 +1,7 @@
 describe('Проверка оформления заказа Stellar burgers', () => {
     beforeEach(() => {
-        cy.viewport(1400, 1000)
+        cy.viewport(1400, 1000);
+        cy.intercept("GET", "api/ingredients", { fixture: "ingredients.json" });
     })
 
     it('Должно быть доступно на localhost:3000', function () {
@@ -8,16 +9,45 @@ describe('Проверка оформления заказа Stellar burgers', (
     });
 
     it('Добавление ингредиентов в конструктор', () => {
-        cy.get('#\\36 0d3b41abdacab0026a733c6').trigger('dragstart');
-        cy.get('[data-test="selected"]').trigger('drop');
-        cy.get('#\\36 0d3b41abdacab0026a733cc').trigger('dragstart');
-        cy.get('[data-test="selected"]').trigger('drop');
-        cy.get('#\\36 0d3b41abdacab0026a733c8').trigger('dragstart');
-        cy.get('[data-test="selected"]').trigger('drop');
+        cy.get('[data-test-id="ingredient"]')
+            .first()
+            .then(($el) => {
+                const elText1 = $el.find('[data-test-id="ingredient-name"]').text();
+                cy.wrap($el).trigger("dragstart");
+                cy.get('[data-test="selected"]').trigger('drop');
+                cy.get('[data-test-id="burger-bun-element"]')
+                    .contains(elText1)
+                    .should("exist");
+            });
+        cy.get('[data-test-id="burger-bun-element"]').should("have.length", 2);
+
+        cy.get('[data-test-id="ingredient"]')
+            .eq(3)
+            .then(($el) => {
+                const elText = $el.find('[data-test-id="ingredient-name"]').text();
+                cy.wrap($el).trigger("dragstart");
+                cy.get('[data-test="selected"]').trigger('drop');
+                cy.get('[data-test-id="burger-element"]')
+                    .contains(elText)
+                    .should("exist");
+                cy.get('[data-test-id="burger-element"]').should("have.length", 1);
+            });
+        cy.get('[data-test-id="ingredient"]')
+            .eq(7)
+            .then(($el) => {
+                const elText = $el.find('[data-test-id="ingredient-name"]').text();
+                cy.wrap($el).trigger("dragstart");
+                cy.get('[data-test="selected"]').trigger('drop');
+                cy.get('[data-test-id="burger-element"]')
+                    .contains(elText)
+                    .should("exist");
+                cy.get('[data-test-id="burger-element"]').should("have.length", 2);
+            });
     });
 
     it('Открытие модального окна с описанием ингредиента', () => {
-        cy.get('#\\36 0d3b41abdacab0026a733c6').click();
+        cy.get('[data-test-id="ingredient"]')
+            .first().click();
         cy.location('pathname').should('eq', '/ingredients/60d3b41abdacab0026a733c6');
         cy.get('.modal_modal__mg41g').should('exist');
         cy.get('.modal_modal__mg41g').contains('Детали ингредиента');

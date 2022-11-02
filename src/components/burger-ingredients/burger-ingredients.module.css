@@ -42,6 +42,7 @@
 .ingredientCard {
     max-width: 270px;
     color: darkgrey;
+    text-decoration: none;
 }
 
 .counter {

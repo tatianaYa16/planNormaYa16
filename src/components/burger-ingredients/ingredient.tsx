@@ -42,6 +42,9 @@ export const Ingredient:FC<IIngredient> = ({product})=> {
               className={styles.ingredientCard}
               style={{opacity: opacity}}
               ref={refIngredient}
+              data-testid={`test_id_${product._id}`}
+              data-test-id={`ingredient`}
+              data-test-key={product._id}
               draggable
               to={{pathname: `/ingredients/${_id}`, state: {background: location, ids: _id}}}>
             <div className={styles.counter}>
@@ -52,7 +55,7 @@ export const Ingredient:FC<IIngredient> = ({product})=> {
                 <p className="text text_type_digits-default">{price}</p>
                 <CurrencyIcon type="primary"/>
             </div>
-            <p className={styles.name + ' text text_type_main-small '}>
+            <p className={styles.name + ' text text_type_main-small '} data-test-id={`ingredient-name`}>
                 {name}
             </p>
         </Link>

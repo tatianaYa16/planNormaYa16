@@ -1,24 +1,19 @@
 import {
     FORGOT_PASSWORD_FAILED,
     FORGOT_PASSWORD_SUCCESS,
-    RESET_PASSWORD_REQUEST,
     RESET_PASSWORD_FAILED,
     RESET_PASSWORD_SUCCESS,
-    REGISTER_USER_REQUEST,
     REGISTER_USER_FAILED,
     REGISTER_USER_SUCCESS,
-    LOGIN_USER_REQUEST,
     LOGIN_USER_SUCCESS,
     LOGIN_USER_FAILED,
     LOGOUT_USER_SUCCESS,
-    LOGOUT_USER_FAILED,
-    LOGOUT_USER_REQUEST,
     GET_USER_REQUEST,
     GET_USER_FAILED,
     GET_USER_SUCCESS,
     POST_USER_REQUEST,
     POST_USER_SUCCESS,
-    POST_USER_FAILED, FORGOT_PASSWORD_REQUEST
+    POST_USER_FAILED
 
 } from '../constants';
 import {initialState, userReducer} from './user';
@@ -161,5 +156,96 @@ describe('Auth reducer', () => {
 
         expect(userReducer(initialState, action)).toEqual(expectedState);
     });
+
+    it('Should handle GET_USER_REQUEST', () => {
+        const action:TUserActions = {
+            type: GET_USER_REQUEST
+        };
+
+        const expectedState = {
+            ...initialState,
+            getUserFailed: false,
+            getUserSuccess: false,
+            getUserRequest: true
+        };
+
+        expect(userReducer(initialState, action)).toEqual(expectedState);
+    });
+
+    it('Should handle GET_USER_FAILED', () => {
+        const action:TUserActions = {
+            type: GET_USER_FAILED
+        };
+
+        const expectedState = {
+            ...initialState,
+            getUserFailed: true,
+            getUserSuccess: false,
+            getUserRequest: false
+        };
+
+        expect(userReducer(initialState, action)).toEqual(expectedState);
+    });
+
+    it('Should handle POST_USER_REQUEST', () => {
+        const action:TUserActions = {
+            type: POST_USER_REQUEST
+        };
+
+        const expectedState = {
+            ...initialState,
+            postUserFailed: false,
+            postUserSuccess: false,
+            postUserRequest: true
+        };
+
+        expect(userReducer(initialState, action)).toEqual(expectedState);
+    });
+
+    it('Should handle POST_USER_SUCCESS', () => {
+        const action:TUserActions = {
+            type: POST_USER_SUCCESS,
+            user
+        };
+
+        const expectedState = {
+            ...initialState,
+            user: action.user,
+            postUserFailed: false,
+            postUserSuccess: true,
+            postUserRequest: false
+        };
+
+        expect(userReducer(initialState, action)).toEqual(expectedState);
+    });
+
+    it('Should handle POST_USER_FAILED', () => {
+        const action:TUserActions = {
+            type: POST_USER_FAILED
+        };
+
+        const expectedState = {
+            ...initialState,
+            postUserFailed: true,
+            postUserSuccess: false,
+            postUserRequest: false
+        };
+
+        expect(userReducer(initialState, action)).toEqual(expectedState);
+    });
+
+    it('Should handle LOGOUT_USER_SUCCESS', () => {
+        const action:TUserActions = {
+            type: LOGOUT_USER_SUCCESS
+        };
+
+        const expectedState = {
+            ...initialState,
+            isAuth: false
+        };
+
+        expect(userReducer(initialState, action)).toEqual(expectedState);
+    });
+
 
 });

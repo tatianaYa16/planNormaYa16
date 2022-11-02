@@ -88,7 +88,7 @@ export default function BurgerConstructor() {
         <section className={styles.constructorMain}>
             <div className={`${styles.buns} pl-10`} ref={dropBun} data-test={'selected'}>
                 {bun ? (
-                        <section className={styles.buns_padding}>
+                        <section className={styles.buns_padding} data-test-id="burger-bun-element">
                             <ConstructorElement
                                 type='top'
                                 isLocked={true}
@@ -102,11 +102,11 @@ export default function BurgerConstructor() {
                 <div ref={dropIngredients}
                      className={`${styles.ingredients}`}>
                     {ingredients.map((ingredient: ITypeIngredient, index: number) => (
-                            <IngredientItem key={ingredient.uuid} index={index} data={ingredient}/>
+                            <IngredientItem key={ingredient.uuid} index={index} data={ingredient} />
                     ))}
                 </div>
                 {bun ? (
-                    <section className={styles.buns_padding}>
+                    <section className={styles.buns_padding} data-test-id="burger-bun-element">
                         <ConstructorElement
                             type='bottom'
                             isLocked={true}

@@ -13,8 +13,15 @@ import {
 import {AnyAction} from "redux";
 import {
     IConstructorAddBun,
-    IConstructorAddIngredient, IConstructorMoveIngredient,
-    IConstructorRemoveIngredient
+    IConstructorAddIngredient,
+    IConstructorMoveIngredient,
+    IConstructorRemoveIngredient,
+    IModalClose,
+    IModalOpen,
+    IOrderFailed,
+    IOrderRequest,
+    IOrderSuccess,
+    TBurgerConstructorActions
 } from "../actions/burger-constructor";
 import {ITypeIngredient} from "../../utils/types";
 
@@ -120,6 +127,76 @@ describe('initialState reducer', () => {
             ingredients: [ingredient, bun]
         }, action)).toEqual(expectedState);
     })
+
+    it('Should handle ORDER_REQUEST', () => {
+        const action: IOrderRequest  = {
+            type: ORDER_REQUEST
+        };
+        const expectedState = {
+            ...initialState,
+            orderRequest: true
+        };
+
+        expect(burgerConstructorReducer(initialState, action)).toEqual(expectedState);
+    })
+
+    it('Should handle ORDER_SUCCESS', () => {
+        const action: IOrderSuccess  = {
+            type: ORDER_SUCCESS,
+            orderNumber: 1231
+        };
+        const expectedState = {
+            ...initialState,
+            orderNumber: action.orderNumber,
+            orderRequest: false,
+            orderFailed: false
+        };
+
+        expect(burgerConstructorReducer(initialState, action)).toEqual(expectedState);
+    })
+
+    it('Should handle ORDER_FAILED', () => {
+        const action: IOrderFailed  = {
+            type: ORDER_FAILED
+        };
+        const expectedState = {
+            ...initialState,
+            orderRequest: false,
+            orderFailed: true
+        };
+
+        expect(burgerConstructorReducer(initialState, action)).toEqual(expectedState);
+    })
+
+    it('Should handle     MODAL_CLOSE\n', () => {
+        const action: IModalClose  = {
+            type: MODAL_CLOSE
+
+        };
+        const expectedState = {
+            ...initialState,
+            orderNumber: undefined,
+            ingredients: [],
+            bun: undefined,
+            modal: false
+        };
+
+        expect(burgerConstructorReducer(initialState, action)).toEqual(expectedState);
+    })
+
+    it('Should handle     MODAL_OPEN\n', () => {
+        const action: IModalOpen  = {
+            type: MODAL_OPEN
+
+        };
+        const expectedState = {
+            ...initialState,
+            modal: true
+        };
+
+        expect(burgerConstructorReducer(initialState, action)).toEqual(expectedState);
+    })
+
 
 
 })
