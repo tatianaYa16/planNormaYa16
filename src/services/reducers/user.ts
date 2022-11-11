@@ -1,18 +1,13 @@
 import {
     FORGOT_PASSWORD_FAILED,
     FORGOT_PASSWORD_SUCCESS,
-    RESET_PASSWORD_REQUEST,
     RESET_PASSWORD_FAILED,
     RESET_PASSWORD_SUCCESS,
-    REGISTER_USER_REQUEST,
     REGISTER_USER_FAILED,
     REGISTER_USER_SUCCESS,
-    LOGIN_USER_REQUEST,
     LOGIN_USER_SUCCESS,
     LOGIN_USER_FAILED,
     LOGOUT_USER_SUCCESS,
-    LOGOUT_USER_FAILED,
-    LOGOUT_USER_REQUEST,
     GET_USER_REQUEST,
     GET_USER_FAILED,
     GET_USER_SUCCESS,
@@ -25,7 +20,7 @@ import {TUserActions} from "../actions/user";
 
 import {setCookie, deleteCookie} from "../../utils/cookieUtils";
 import {saveTokens} from "../../utils/response-utils";
-import {TUser} from "../api";
+import {TUser} from "../../utils/types";
 
 export type TUserState = {
     forgotPasswordRequest: boolean,
@@ -42,7 +37,7 @@ export type TUserState = {
     accessToken?: boolean,
     refreshToken?: boolean
 };
-const initialState:TUserState = {
+export const initialState:TUserState = {
     forgotPasswordRequest: false,
     resetPasswordRequest: false,
     registerUserRequest: false,

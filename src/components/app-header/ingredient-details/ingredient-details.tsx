@@ -1,7 +1,7 @@
 import React, {useMemo} from 'react';
 import styles from "./ingredient-details.module.css";
-import {ITypeIngredient} from "../../utils/types";
-import {useSelector} from "../../services/hooks";
+import {ITypeIngredient} from "../../../utils/types";
+import {useSelector} from "../../../services/hooks";
 
 export default function IngredientDetails() {
     const getLastParam = (url: string) => {

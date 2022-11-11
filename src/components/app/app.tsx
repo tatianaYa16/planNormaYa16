@@ -19,7 +19,7 @@ import {
     getIngredientsThunk,
     ingredientModalClose
 } from "../../services/actions/burger-ingredients";
-import IngredientDetails from "../ingredient-details/ingredient-details";
+import IngredientDetails from "../app-header/ingredient-details/ingredient-details";
 import {FeedPage} from "../../pages/order-feed/order-feed";
 import {OrderPage} from "../../pages/order-page/order-page";
 import FeedDetails from "../feed-details/feed-details";

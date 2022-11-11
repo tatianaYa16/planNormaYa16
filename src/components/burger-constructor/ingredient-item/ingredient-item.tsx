@@ -67,7 +67,7 @@ const IngredientItem: FC<TCard<ITypeIngredient>> = (props) => {
     drag(drop(itemRef));
 
     return (
-        <span style={{opacity: opacity}} ref={itemRef}>
+        <span style={{opacity: opacity}} ref={itemRef} data-test-id="burger-element">
             <DragIcon type="primary"/>
             <ConstructorElement
                 text={name}
